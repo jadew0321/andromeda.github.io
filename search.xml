@@ -30,7 +30,7 @@
 </li>
 <li><p>每个时间序列$\mathbf{x}<em>{i}=\left{\mathbf{x}</em>{i}^{t}\right}<em>{t=1}^{T</em>{i}}$的长度都为 $T_{i}$, </p>
 </li>
-<li><p>$$<br>x_i={x^t_i}^{T_i}<em>{t=1}，x_i^t\in \mathbb{R}^{d</em>{i}}<br>$$</p>
+<li><p>$\mathcal{S}$</p>
 </li>
 </ul>
 <h1 id="APPROACH"><a href="#APPROACH" class="headerlink" title="APPROACH"></a>APPROACH</h1><h1 id="EXPERIMENT"><a href="#EXPERIMENT" class="headerlink" title="EXPERIMENT"></a>EXPERIMENT</h1><ul>
