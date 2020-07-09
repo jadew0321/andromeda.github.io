@@ -48,7 +48,7 @@
 </li>
 </ul>
 <p>模型总体架构示意图如下所示：</p>
-<p><img src="/andromeda.github.io/andromeda.github.io/2020/07/09/Handling-Variable-Dimensional-Time-Series-with-Graph-Neural-Networks/My_Github\blog\img\20200709Handling Variable-Dimensional Time Series with Graph Neural Networks\20200709Handling Variable-Dimensional Time Series with Graph Neural Networks_1.jpg" alt="20200709Handling Variable-Dimensional Time Series with Graph Neural Networks_1"></p>
+<p><img src="/andromeda.github.io/andromeda.github.io/2020/07/09/Handling-Variable-Dimensional-Time-Series-with-Graph-Neural-Networks/My_Github\blog\source\_posts\Handling-Variable-Dimensional-Time-Series-with-Graph-Neural-Networks\20200709Handling Variable-Dimensional Time Series with Graph Neural Networks_1.jpg" alt="20200709Handling Variable-Dimensional Time Series with Graph Neural Networks_1"></p>
 <h2 id="Data-Processing"><a href="#Data-Processing" class="headerlink" title="Data Processing"></a>Data Processing</h2><ul>
 <li><p>Details</p>
 <p>首先确定最大变量维度d，所有变量组合的维度$1 \leq d{i} \leq d$。如左下角的Input Time Series(x) 所示，对第二维缺失传感器数值的维度进行mean-imputed，即该传感器在其他实例中可用时的平均值，预处理后的多变量时序数据$\mathbf{x}{i}$中每个时刻的输入都是一个d维向量。</p>
@@ -96,14 +96,12 @@
 </ul>
 <script type="math/tex; mode=display">
 \mathbf{z}_{i}^{t}=G R U\left(\left[\tilde{\mathbf{x}}_{i}^{t}, \mathbf{v}_{\mathcal{S}_{i}}\right], \mathbf{z}_{i}^{t-1} ; \boldsymbol{\theta}_{G R U}\right), \quad t: 1, \ldots, T_{i}</script><ul>
-<li><p>在最后一个时刻，得到模型输出的特征向量$\mathbf{z}_{i}^{T_i}$，预测的输出根据不同的下游任务进行构造和确定：</p>
-<script type="math/tex; mode=display">
-\hat{y}_{i}=f_{o}\left(\mathbf{z}_{i}^{T_{i}} ; \boldsymbol{\theta}_{o}\right)</script><p>附上LSTM和GRU的结构图作为参考：</p>
-<p><img src="/andromeda.github.io/andromeda.github.io/2020/07/09/Handling-Variable-Dimensional-Time-Series-with-Graph-Neural-Networks/My_Github\blog\img\20200709Handling Variable-Dimensional Time Series with Graph Neural Networks\20200709Handling Variable-Dimensional Time Series with Graph Neural Networks_2.png" alt="20200709Handling Variable-Dimensional Time Series with Graph Neural Networks_2"></p>
-</li>
+<li>在最后一个时刻，得到模型输出的特征向量$\mathbf{z}_{i}^{T_i}$，预测的输出根据不同的下游任务进行构造和确定：<script type="math/tex; mode=display">
+\hat{y}_{i}=f_{o}\left(\mathbf{z}_{i}^{T_{i}} ; \boldsymbol{\theta}_{o}\right)</script>附上LSTM和GRU的结构图作为参考：</li>
 </ul>
 </li>
 </ul>
+<p><img src="/andromeda.github.io/andromeda.github.io/2020/07/09/Handling-Variable-Dimensional-Time-Series-with-Graph-Neural-Networks/My_Github\blog\source\_posts\Handling-Variable-Dimensional-Time-Series-with-Graph-Neural-Networks\20200709Handling Variable-Dimensional Time Series with Graph Neural Networks_2.png" alt="20200709Handling Variable-Dimensional Time Series with Graph Neural Networks_2"></p>
 <h3 id="Training-Rules"><a href="#Training-Rules" class="headerlink" title="Training Rules"></a>Training Rules</h3><ul>
 <li>整个模型通过随机梯度下降（SGD）以end-to-end的形式进行整体的训练。</li>
 <li><p>损失函数：</p>
@@ -127,7 +125,8 @@
 <li>Fine-tuning setting：把一部分变量组合包含的数据作为训练数据，使用除训练集外的一部分与测试集相同变量组合的带标记数据来微调网络参数，用剩下的测试数据进行测试。</li>
 <li>$f_{t r}$和$f_{t e}$表示训练和测试过程中每个时间序列不可用传感器的比例，令$f_{t r}=\{0.25,0.4\}$，且$f_{t e}=\{0.1,0.25,0.4,0.5\}$。</li>
 </ul>
-<h3 id="Case-1"><a href="#Case-1" class="headerlink" title="Case #1"></a>Case #1</h3>]]></content>
+<h3 id="Case-1"><a href="#Case-1" class="headerlink" title="Case #1"></a>Case #1</h3><p><img src="/andromeda.github.io/andromeda.github.io/2020/07/09/Handling-Variable-Dimensional-Time-Series-with-Graph-Neural-Networks/My_Github\blog\source\_posts\Handling-Variable-Dimensional-Time-Series-with-Graph-Neural-Networks\20200709Handling Variable-Dimensional Time Series with Graph Neural Networks_3.png" alt="20200709Handling Variable-Dimensional Time Series with Graph Neural Networks_3"></p>
+]]></content>
       <categories>
         <category>GNN</category>
       </categories>
