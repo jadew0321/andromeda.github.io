@@ -3,6 +3,11 @@
   <entry>
     <title>Handling Variable-Dimensional Time Series with Graph Neural Networks</title>
     <url>/andromeda.github.io/2020/07/09/Handling-Variable-Dimensional-Time-Series-with-Graph-Neural-Networks/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<h1 id="Handling-Variable-Dimensional-Time-Series-with-Graph-Neural-Networks"><a href="#Handling-Variable-Dimensional-Time-Series-with-Graph-Neural-Networks" class="headerlink" title="Handling Variable-Dimensional Time Series with Graph Neural Networks"></a>Handling Variable-Dimensional Time Series with Graph Neural Networks</h1><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>在IOT场景，涉及到多个传感器采集数据，会产生多传感器时间序列。现有的基于NN方法的多变量时间序列建模方法输入维数（即传感器数量）固定。</p>
+<p>但是在实际场景中，往往存在不同种类、不同数量传感器的多种组合，因此模型需要考虑不同(可变)的输入维度。</p>
+]]></content>
+      <tags>
+        <tag>paper</tag>
+      </tags>
   </entry>
 </search>
