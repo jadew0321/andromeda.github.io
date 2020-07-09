@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Jade</title>
+  
+  <subtitle>Notes for Machine Learning</subtitle>
+  <link href="/andromeda.github.io/atom.xml" rel="self"/>
+  
+  <link href="https://jadew0321.github.io/andromeda.github.io/"/>
+  <updated>2020-07-09T02:10:20.686Z</updated>
+  <id>https://jadew0321.github.io/andromeda.github.io/</id>
+  
+  <author>
+    <name>Jade W</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Handling Variable-Dimensional Time Series with Graph Neural Networks</title>
+    <link href="https://jadew0321.github.io/andromeda.github.io/2020/07/09/Handling-Variable-Dimensional-Time-Series-with-Graph-Neural-Networks/"/>
+    <id>https://jadew0321.github.io/andromeda.github.io/2020/07/09/Handling-Variable-Dimensional-Time-Series-with-Graph-Neural-Networks/</id>
+    <published>2020-07-09T02:10:20.000Z</published>
+    <updated>2020-07-09T02:10:20.686Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+    
+  </entry>
+  
+</feed>
