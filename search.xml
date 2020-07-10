@@ -258,8 +258,5 @@
 <p>其中data可以是：list, tuple, array, scalar等类型。torch.tensor()可以从data中的数据部分做拷贝（而不是直接引用），根据原始数据类型生成相应的torch.LongTensor，torch.FloatTensor，torch.DoubleTensor。</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; a&#x3D;torch.Tensor([1,2])</span><br><span class="line">&gt;&gt;&gt; a.type()</span><br><span class="line">&#39;torch.FloatTensor&#39;</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; a &#x3D; torch.tensor([1, 2])</span><br><span class="line">&gt;&gt;&gt; a.type()</span><br><span class="line">&#39;torch.LongTensor&#39;</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; a &#x3D; torch.tensor([1., 2.])</span><br><span class="line">&gt;&gt;&gt; a.type()</span><br><span class="line">&#39;torch.FloatTensor&#39;</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; a &#x3D; np.zeros(2, dtype&#x3D;np.float64)</span><br><span class="line">&gt;&gt;&gt; a &#x3D; torch.tensor(a)</span><br><span class="line">&gt;&gt;&gt; a.type()</span><br><span class="line">torch.DoubleTensor</span><br></pre></td></tr></table></figure>
 ]]></content>
-      <tags>
-        <tag>torch</tag>
-      </tags>
   </entry>
 </search>
