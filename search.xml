@@ -206,10 +206,11 @@
 <p><img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/10/How-to-create-your-personal-homepage/1.jpg?raw=true" alt="1" style="zoom:50%;"></p>
 </li>
 <li><p>新建仓库完成后，进入该仓库的Settings，查看和熟悉一下，往下拉有个Github Pages，下面这个画横线的站点就是我们创建的个人网页地址，放收藏夹哈之后会一直用到的。选择master branch，如果这个选择是灰的，就先点下一个按键，选一个主题之后就自动master branch啦~</p>
+<p><img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/10/How-to-create-your-personal-homepage/3.jpg?raw=true" alt="3"></p>
+<p>先看一眼我踏过千山万水、填过千沟万壑之后的blog成品图</p>
+<p>好搞笑哦，能看到这篇博客的应该也能看到主页吧！多此一举多此一举。go on~</p>
 </li>
 </ul>
-<p>  先看一眼我踏过千山万水、填过千沟万壑之后的blog成品图</p>
-<p>  好搞笑哦，能看到这篇博客的应该也能看到主页吧！多此一举多此一举。go on~</p>
 <h1 id="配置SSHkey"><a href="#配置SSHkey" class="headerlink" title="配置SSHkey"></a>配置SSHkey</h1><ul>
 <li><p>要使用git工具首先要配置以下SSH Key，为部署本地博客到Github做准备。在第一次新建的文件夹里面 Git Bash Here 输入以下命令：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd ~&#x2F;.ssh</span><br></pre></td></tr></table></figure>
@@ -225,10 +226,10 @@
 </li>
 </ul>
 <h1 id="连接Github与本地blog文件"><a href="#连接Github与本地blog文件" class="headerlink" title="连接Github与本地blog文件"></a>连接Github与本地blog文件</h1><ul>
-<li>打开博客根目录下的_config.yml 配置文件，拉到最后，在deployment段落中填上以下信息：</li>
-</ul>
-<p>  第一个大坑来了！！！除了网上各大教程都说了的，要在冒号后面加一个空格之外！！！千万千万千万不要修改type\repository\branch前面的缩进！一定是要在原始的格式上，在冒号后空一格填上你对应的信息……可能大家也没有我这么手贱，去强行缩进和改动，以至于后面一直一直部署不了。</p>
-<ul>
+<li><p>打开博客根目录下的_config.yml 配置文件，拉到最后，在deployment段落中填上以下信息：</p>
+<p><img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/10/How-to-create-your-personal-homepage/4.png?raw=true" alt="4"></p>
+<p>第一个大坑来了！！！除了网上各大教程都说了的，要在冒号后面加一个空格之外！！！千万千万千万不要修改type\repository\branch前面的缩进！一定是要在原始的格式上，在冒号后空一格填上你对应的信息……可能大家也没有我这么手贱，去强行缩进和改动，以至于后面一直一直部署不了。</p>
+</li>
 <li><p>修改完之后就可以继续在命令行窗口输入下面的generate代码：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo g -d</span><br></pre></td></tr></table></figure>
 </li>
