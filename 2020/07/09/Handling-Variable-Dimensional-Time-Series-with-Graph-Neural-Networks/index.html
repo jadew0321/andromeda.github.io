@@ -177,11 +177,10 @@
 </ul>
 <h1 id="EXPERIMENT"><a href="#EXPERIMENT" class="headerlink" title="EXPERIMENT"></a>EXPERIMENT</h1><h3 id="Dataset"><a href="#Dataset" class="headerlink" title="Dataset"></a>Dataset</h3><ul>
 <li>DSADS</li>
-<li><p>HAR</p>
-</li>
-<li><p>Turbofan</p>
-</li>
+<li>HAR</li>
+<li>Turbofan</li>
 </ul>
+<p><img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/09/Handling-Variable-Dimensional-Time-Series-with-Graph-Neural-Networks/3.jpg?raw=true" alt="3"></p>
 <h3 id="Experimental-Setup"><a href="#Experimental-Setup" class="headerlink" title="Experimental Setup"></a>Experimental Setup</h3><ul>
 <li>Zero-shot setting：把一部分变量组合包含的数据作为训练数据，除训练集外剩下所有unseen的组合作为测试数据，直接使用训练好的网络进行推理。</li>
 <li>Fine-tuning setting：把一部分变量组合包含的数据作为训练数据，使用除训练集外的一部分与测试集相同变量组合的带标记数据来微调网络参数，用剩下的测试数据进行测试。</li>
@@ -201,7 +200,23 @@
 <li>GRU-SE（GRU with Maxpool over Sensor Embeddings）：这是一项在GRU-CM上的消融研究，忽略了结点更新和边更新所涉及的两个步骤，将最大池化操作直接应用于原始的传感器嵌入向量，无需通过GNNs进行组合特异性处理。换句话说，特定组合的active 结点彼此之间不交换消息以适应特定的传感器组合。</li>
 <li>注意，另一个对比模型可能是为每个维度学习一个单独的模型，但这在计算上很昂贵，所需的资源将随着时间序列的维度增长。此外，这样的方法将不能有效地捕获多维间的相关性。</li>
 </ul>
-<h3 id="Case-1"><a href="#Case-1" class="headerlink" title="Case #1"></a>Case #1</h3>
+<h3 id="Result-and-Observations"><a href="#Result-and-Observations" class="headerlink" title="Result and Observations"></a>Result and Observations</h3><p><img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/09/Handling-Variable-Dimensional-Time-Series-with-Graph-Neural-Networks/4.jpg?raw=true" alt="4"></p>
+<ul>
+<li>在zero-shot和微调测试场景中，GRU-CM在三个数据集上的表现都优于普通的GRU。换句话说，在大多数情况下，GRU-CM能够显著缩小GRU-A和GRU之间的差距，证明其鲁棒性可以适应于不可见的传感器组合。</li>
+<li>在zero-shot情形下，GRU-CM要明显优于GRU，fine-tuning也能大大提升GRU和GRU-CM的性能，而相比之下，GRU-CM在fine-tuning数据量不多的时候，更能快速适应，比GRU精度更高。</li>
+<li>随着测试时不可用传感器的比例增加，GRU和GRU-CM的性能都会下降。然而，与GRU相比，GRU-CM性能下降得更为缓慢，体现了conditioning module的优势。</li>
+<li>在与GRU-SE比较的消融实验中，在大多数情况下，GRU-CM的效果优于GRU-SE。此外，GRU-SE有时表现不如普通的GRU。这些观察结果证明了在可用传感器之间传递消息以提供更好的条件向量的重要性。</li>
+</ul>
+<h3 id="Side-Experiment"><a href="#Side-Experiment" class="headerlink" title="Side Experiment"></a>Side Experiment</h3><p>在本实验中，fine-tuning的数据不是来自于测试集，而是取训练集中与测试集里传感器组合有高度重合部分的样本进行微调，并把微调结果和zero-shot情形进行对比。</p>
+<p><img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/09/Handling-Variable-Dimensional-Time-Series-with-Graph-Neural-Networks/5.jpg?raw=true" alt="5"></p>
+<ul>
+<li>从对比结果可以看出，这种微调方式下，与原来的zero-shot相比，GRU和GRU-CM的结果都有所改善，但GRU-CM的表现仍好于GRU。<strong>这进一步突出了GRU-CM适应新传感器组合的能力，甚至比让GRU针对特定实例进行微调更好。</strong></li>
+</ul>
+<h1 id="IDEA"><a href="#IDEA" class="headerlink" title="IDEA"></a>IDEA</h1><ul>
+<li>在GNN中加入注意力机制</li>
+<li>在用高度重叠实例进行fine-tuning时可考虑找多个高重叠度的实例进行集成学习进行互补。</li>
+</ul>
+
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
                 <source type="audio/mpeg" src="">
