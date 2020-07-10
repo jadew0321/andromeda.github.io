@@ -48,7 +48,7 @@
 </li>
 </ul>
 <p>模型总体架构示意图如下所示：</p>
-<p><img src="/andromeda.github.io/andromeda.github.io/2020/07/09/Handling-Variable-Dimensional-Time-Series-with-Graph-Neural-Networks/My_Github\blog\source\_posts\Handling-Variable-Dimensional-Time-Series-with-Graph-Neural-Networks\20200709Handling Variable-Dimensional Time Series with Graph Neural Networks_1.jpg" alt></p>
+<p><img src="/andromeda.github.io/andromeda.github.io/2020/07/09/Handling-Variable-Dimensional-Time-Series-with-Graph-Neural-Networks/20200709Handling Variable-Dimensional Time Series with Graph Neural Networks_1.jpg" alt></p>
 <h2 id="Data-Processing"><a href="#Data-Processing" class="headerlink" title="Data Processing"></a>Data Processing</h2><ul>
 <li><p>Details</p>
 <p>首先确定最大变量维度d，所有变量组合的维度$1 \leq d{i} \leq d$。如左下角的Input Time Series(x) 所示，对第二维缺失传感器数值的维度进行mean-imputed，即该传感器在其他实例中可用时的平均值，预处理后的多变量时序数据$\mathbf{x}{i}$中每个时刻的输入都是一个d维向量。</p>
