@@ -48,8 +48,7 @@
 </li>
 </ul>
 <p>模型总体架构示意图如下所示：</p>
-<p><img src="/Handling-Variable-Dimensional-Time-Series-with-Graph-Neural-Networks/1.jpg" alt="1.jpg"></p>
-<p><img src="/Handling-Variable-Dimensional-Time-Series-with-Graph-Neural-Networks/1.jpg" alt="1"></p>
+<p><img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/09/Handling-Variable-Dimensional-Time-Series-with-Graph-Neural-Networks/1.jpg?raw=true" alt="1"></p>
 <h2 id="Data-Processing"><a href="#Data-Processing" class="headerlink" title="Data Processing"></a>Data Processing</h2><ul>
 <li><p>Details</p>
 <p>首先确定最大变量维度d，所有变量组合的维度$1 \leq d{i} \leq d$。如左下角的Input Time Series(x) 所示，对第二维缺失传感器数值的维度进行mean-imputed，即该传感器在其他实例中可用时的平均值，预处理后的多变量时序数据$\mathbf{x}{i}$中每个时刻的输入都是一个d维向量。</p>
@@ -102,7 +101,7 @@
 </ul>
 </li>
 </ul>
-<p><img src="/andromeda.github.io/andromeda.github.io/2020/07/09/Handling-Variable-Dimensional-Time-Series-with-Graph-Neural-Networks/My_Github\blog\source\_posts\Handling-Variable-Dimensional-Time-Series-with-Graph-Neural-Networks\20200709Handling Variable-Dimensional Time Series with Graph Neural Networks_2.png" alt="20200709Handling Variable-Dimensional Time Series with Graph Neural Networks_2"></p>
+<p><img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/09/Handling-Variable-Dimensional-Time-Series-with-Graph-Neural-Networks/2.png?raw=true" alt="2"></p>
 <h3 id="Training-Rules"><a href="#Training-Rules" class="headerlink" title="Training Rules"></a>Training Rules</h3><ul>
 <li>整个模型通过随机梯度下降（SGD）以end-to-end的形式进行整体的训练。</li>
 <li><p>损失函数：</p>
@@ -137,7 +136,7 @@
   <entry>
     <title>How to create your personal homepage</title>
     <url>/andromeda.github.io/2020/07/10/How-to-create-your-personal-homepage/</url>
-    <content><![CDATA[<p><img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/09/Handling-Variable-Dimensional-Time-Series-with-Graph-Neural-Networks/1.jpg?raw=true" alt="1"></p>
+    <content><![CDATA[<p><img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/10/How-to-create-your-personal-homepage/cover%20(2" alt>.JPG?raw=true)</p>
 ]]></content>
       <categories>
         <category>Hexo</category>
