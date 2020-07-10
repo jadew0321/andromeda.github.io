@@ -6,7 +6,7 @@
   <link href="/andromeda.github.io/atom.xml" rel="self"/>
   
   <link href="https://jadew0321.github.io/andromeda.github.io/"/>
-  <updated>2020-07-10T12:23:40.283Z</updated>
+  <updated>2020-07-10T12:27:36.569Z</updated>
   <id>https://jadew0321.github.io/andromeda.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://jadew0321.github.io/andromeda.github.io/2020/07/10/Knowledge-about-torch/"/>
     <id>https://jadew0321.github.io/andromeda.github.io/2020/07/10/Knowledge-about-torch/</id>
     <published>2020-07-10T12:17:49.000Z</published>
-    <updated>2020-07-10T12:23:40.283Z</updated>
+    <updated>2020-07-10T12:27:36.569Z</updated>
     
     <content type="html"><![CDATA[<h1 id="torch-Tensor-和torch-tensor的区别"><a href="#torch-Tensor-和torch-tensor的区别" class="headerlink" title="torch.Tensor 和torch.tensor的区别"></a>torch.Tensor 和torch.tensor的区别</h1><p>在Pytorch中，torch.Tensor和torch.tensor都用于生成新的张量。</p><h3 id="torch-Tensor"><a href="#torch-Tensor" class="headerlink" title="torch.Tensor()"></a>torch.Tensor()</h3><p>torch.Tensor() 是Python类，更明确的说，是默认张量类型torch.FloatTensor()的别名，torch.Tensor([1,2]) 会调用Tensor类的构造函数<strong>init</strong>，生成单精度浮点类型的张量。</p><h3 id="torch-tensor"><a href="#torch-tensor" class="headerlink" title="torch.tensor()"></a>torch.tensor()</h3><p>torch.tensor()仅仅是Python的函数，函数原型是：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">torch.tensor(data, dtype&#x3D;None, device&#x3D;None, requires_grad&#x3D;False)</span><br></pre></td></tr></table></figure><p>其中data可以是：list, tuple, array, scalar等类型。torch.tensor()可以从data中的数据部分做拷贝（而不是直接引用），根据原始数据类型生成相应的torch.LongTensor，torch.FloatTensor，torch.DoubleTensor。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a&#x3D;torch.Tensor([1,2])</span><br><span class="line">&gt;&gt;&gt; a.type()</span><br><span class="line">&#39;torch.FloatTensor&#39;</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; a &#x3D; torch.tensor([1, 2])</span><br><span class="line">&gt;&gt;&gt; a.type()</span><br><span class="line">&#39;torch.LongTensor&#39;</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; a &#x3D; torch.tensor([1., 2.])</span><br><span class="line">&gt;&gt;&gt; a.type()</span><br><span class="line">&#39;torch.FloatTensor&#39;</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; a &#x3D; np.zeros(2, dtype&#x3D;np.float64)</span><br><span class="line">&gt;&gt;&gt; a &#x3D; torch.tensor(a)</span><br><span class="line">&gt;&gt;&gt; a.type()</span><br><span class="line">torch.DoubleTensor</span><br></pre></td></tr></table></figure>]]></content>
     
@@ -34,8 +34,6 @@
     
     </summary>
     
-    
-      <category term="coding" scheme="https://jadew0321.github.io/andromeda.github.io/categories/coding/"/>
     
     
       <category term="torch" scheme="https://jadew0321.github.io/andromeda.github.io/tags/torch/"/>
