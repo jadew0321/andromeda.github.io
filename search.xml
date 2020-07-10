@@ -123,7 +123,21 @@
 <h3 id="Experimental-Setup"><a href="#Experimental-Setup" class="headerlink" title="Experimental Setup"></a>Experimental Setup</h3><ul>
 <li>Zero-shot setting：把一部分变量组合包含的数据作为训练数据，除训练集外剩下所有unseen的组合作为测试数据，直接使用训练好的网络进行推理。</li>
 <li>Fine-tuning setting：把一部分变量组合包含的数据作为训练数据，使用除训练集外的一部分与测试集相同变量组合的带标记数据来微调网络参数，用剩下的测试数据进行测试。</li>
-<li>$f_{t r}$和$f_{t e}$表示训练和测试过程中每个时间序列不可用传感器的比例，令$f_{t r}=\{0.25,0.4\}$，且$f_{t e}=\{0.1,0.25,0.4,0.5\}$。</li>
+<li>$f_{t r}$和$f_{t e}$表示训练和测试过程中每个时间序列不可用传感器的比例，把训练时的比例记为$f_{t r}=\{0.25,0.4\}$，测试时的比例记为$f_{t e}=\{0.1,0.25,0.4,0.5\}$ </li>
+<li>对于所有数据集，40%用于训练，10%用于验证，10%用于微调(在zero-shot情况下忽略)，其余40%用于测试。</li>
+<li>评价指标：分别使用分类错误率和均方根误差(RMSE)作为分类和回归任务的性能指标。</li>
+</ul>
+<h3 id="Hyperparameters-Used"><a href="#Hyperparameters-Used" class="headerlink" title="Hyperparameters Used"></a>Hyperparameters Used</h3><ul>
+<li>core dynamics module 由三层GRU构成，每层GRU各有128个单元，每个结点的嵌入向量维度为d/2。</li>
+<li>mini-batch在训练时和fine-tuning时的大小分别为64和32，所有前馈层之后都有0.2的dropout用于正则化，训练时采用最大150 epoch，微调时采用最大50 epoch。</li>
+<li>使用无动量的vanilla SGD以5e-4的学习率来更新传感器嵌入向量，用Adam以1e-4的学习率来更新的其他层的学习速率。（由于active 结点在每一个mini-batch中都会随着可用传感器组合的变化而变化，我们发现使用vanilla SGD来更新传感器向量是有用的，然而如果我们加入动量，非active结点的向量也会得到更新；另一方面，在所有变量组合和mini-batch共享的GNN和核心模块，都受益于momentum，因此Adam用于更新它们的参数。)</li>
+</ul>
+<h3 id="Baselines-Considered"><a href="#Baselines-Considered" class="headerlink" title="Baselines Considered"></a>Baselines Considered</h3><ul>
+<li>GRU-CM (GRU with GNNbased conditioning module)：文章提出的模型</li>
+<li>GRU：在缺失传感器中填充均值，相当于GRU-CM模型去掉了conditioning module，只有时序模块，因此不会给GRU提供额外的条件向量信号。</li>
+<li>GRU-A（GRU with All Sensors Available）：该模型对于所有的训练和测试实例，可使用所有的传感器的数值，（即无传感器缺失），训练超参数与GRU-CM相同，旨在找出模型精度的一个上届。</li>
+<li>GRU-SE（GRU with Maxpool over Sensor Embeddings）：这是一项在GRU-CM上的消融研究，忽略了结点更新和边更新所涉及的两个步骤，将最大池化操作直接应用于原始的传感器嵌入向量，无需通过GNNs进行组合特异性处理。换句话说，特定组合的active 结点彼此之间不交换消息以适应特定的传感器组合。</li>
+<li>注意，另一个对比模型可能是为每个维度学习一个单独的模型，但这在计算上很昂贵，所需的资源将随着时间序列的维度增长。此外，这样的方法将不能有效地捕获多维间的相关性。</li>
 </ul>
 <h3 id="Case-1"><a href="#Case-1" class="headerlink" title="Case #1"></a>Case #1</h3>]]></content>
       <categories>
