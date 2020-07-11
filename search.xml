@@ -163,6 +163,26 @@
       </tags>
   </entry>
   <entry>
+    <title>Knowledge-about-pytorch</title>
+    <url>/andromeda.github.io/2020/07/11/Knowledge-about-pytorch/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>newpaper</title>
+    <url>/andromeda.github.io/2020/07/11/newpaper/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>newtechnique</title>
+    <url>/andromeda.github.io/2020/07/11/newtechnique/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>newtechnique</title>
+    <url>/andromeda.github.io/2020/07/11/newtechnique-1/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
     <title>How to create your personal homepage</title>
     <url>/andromeda.github.io/2020/07/10/How-to-create-your-personal-homepage/</url>
     <content><![CDATA[<blockquote>
@@ -241,10 +261,11 @@
 <p>具体的写作和数学公式以及图片显示等等细节，可以参看这个<a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">Hexo中文文档</a>。</p>
 <p><em>最后提醒自己一百遍：坚持坚持坚持！！！</em></p>
 ]]></content>
-  </entry>
-  <entry>
-    <title>Knowledge-about-pytorch</title>
-    <url>/andromeda.github.io/2020/07/11/Knowledge-about-pytorch/</url>
-    <content><![CDATA[]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>technique</tag>
+      </tags>
   </entry>
 </search>
