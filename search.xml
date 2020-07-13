@@ -15,7 +15,7 @@
 <h3 id="假设与矛盾"><a href="#假设与矛盾" class="headerlink" title="假设与矛盾"></a>假设与矛盾</h3><p>大多数现有的对多变量时间序列数据建模的方法假设固定维的时间序列作为输入，<u>这在许多实际情况下，这种假设可能并不成立</u>。例如，在学习活动识别模型时，由于穿戴设备实例的不同，不同人的时间序列可能<u>涉及到不同数量的可用传感器</u>(如加速度计、陀螺仪、磁力仪)。类似地，设备运行状况监控模型也需要处理来自不同实例设备的数据，这些<u>实例上安装了不同的传感器</u>(比如温度、振动和压力)。</p>
 <h3 id="针对场景"><a href="#针对场景" class="headerlink" title="针对场景"></a>针对场景</h3><p>在这项工作中，作者考虑了<u>由同一底层动力系统的不同实例</u>(例如在活动识别中的人)生成多个<u>不同传感器组合的多元时间序列分析问题</u>。即网络的输入维度是不确定的，（但不超过某个最大上限）。</p>
 <h3 id="方法优势"><a href="#方法优势" class="headerlink" title="方法优势"></a>方法优势</h3><p>提出的模型在zero-shot （测试集中可用传感器的组合与训练集中的组合都不相同）和fine-tuning （训练集中包含有少量与测试实例相同组合的样本可用于微调）两个设定实验下性能优于普通NN模型，并且通过ablation study验证了模型各个组成成分的有效性。</p>
-<h1 id="3-RELATED-WORKS"><a href="#3-RELATED-WORKS" class="headerlink" title="3-RELATED WORKS"></a>3-RELATED WORKS</h1><ul>
+<h1 id="3-RELATED-WORKS"><a href="#3-RELATED-WORKS" class="headerlink" title="3-RELATED WORKS"></a>3-RELATED WORKS</h1><ol>
 <li>把传感器个数的变化看作是缺失值，常用的处理时间序列实例中传感器丢失的方法是根据其他实例中传感器可用时的统计数据，为该缺失传感器假定一个常数值（通常是均值）。<ul>
 <li>但是随着测试实例中传感器丢失百分比的增加，该方法的性能会迅速下降。</li>
 </ul>
@@ -30,11 +30,11 @@
 <li>且不同模型训练时不保留任何跨组合的知识。</li>
 </ul>
 </li>
-</ul>
-<p><em>以上相关方法，都有一定的缺陷，因此作者在GNN、transfer-learning、meta-learning的启发下，提出了一种新的神经网络结构，适用于zero-shot 和fine-tuning迁移学习，能够实现在测试时对多变量时间序列进行鲁棒的推理，且这些多变量时间序列中的有效维度（即可用的传感器组合）是未知的。</em></p>
+</ol>
+<p><em>以上相关方法都有一定的缺陷，因此作者在GNN、transfer-learning、meta-learning的启发下，提出了一种新的神经网络结构，适用于zero-shot 和fine-tuning迁移学习，能够实现在测试时对多变量时间序列进行鲁棒的推理，且这些多变量时间序列中的有效维度（即可用的传感器组合）是未知的。</em></p>
 <h1 id="4-PROBLEM-DEFINITION"><a href="#4-PROBLEM-DEFINITION" class="headerlink" title="4-PROBLEM DEFINITION"></a>4-PROBLEM DEFINITION</h1><p>对本问题场景进行数学上的描述，对于符号达成以下共识：</p>
 <ul>
-<li>考虑一个训练集$\mathcal{D}=\left\{\left(\mathbf{x}_{i}, y_{i}\right)\right\}_{i=1}^{N}$ ，具有$N$个多变量时间序列 $x_i \in \mathcal{X}$ 和对应的标签 $y_i \in \mathcal{Y}$。</li>
+<li>考虑一个训练集$\mathcal{D}=\left\{\left(\mathbf{x}_{i}, y_{i}\right)\right\}_{i=1}^{N}$ ，具有$N$个多变量时间序列 $\mathbf{x}_{i} \in \mathcal{X}$ 和对应的标签 $y_i \in \mathcal{Y}$。</li>
 <li>每个时间序列 $\mathbf{x}_{i}=\left\{\mathbf{x}_{i}^{t}\right\}_{t=1}^{T_{i}}$的长度都为 $T_i\in\mathcal{T}$。</li>
 <li>$\mathcal{S}$表示包含所有传感器的集合，共$d$维（即变量最大维度为$d$）；$\mathcal{S}_i \subseteq \mathcal{S}$表示不同的传感器组合，其下标 $i$与 $\mathbf{x}_{i}$ 中的下标对应，表示当前组合包含的可用传感器共$d_i$维，$1 \leq d_{i} \leq d$。</li>
 <li>对于某个时刻$t$来说，$\mathbf{x}_{i}^{t}$ 是 一个 $d_i$ 维的向量，即 $\mathbf{x}_{i}^{t} \in \mathbb{R}^{d_{i}}$。</li>
