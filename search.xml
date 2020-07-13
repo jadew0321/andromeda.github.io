@@ -34,7 +34,7 @@
 <p><em>以上相关方法，都有一定的缺陷，因此作者在GNN、transfer-learning、meta-learning的启发下，提出了一种新的神经网络结构，适用于zero-shot 和fine-tuning迁移学习，能够实现在测试时对多变量时间序列进行鲁棒的推理，且这些多变量时间序列中的有效维度（即可用的传感器组合）是未知的。</em></p>
 <h1 id="4-PROBLEM-DEFINITION"><a href="#4-PROBLEM-DEFINITION" class="headerlink" title="4-PROBLEM DEFINITION"></a>4-PROBLEM DEFINITION</h1><p>对本问题场景进行数学上的描述，对于符号达成以下共识：</p>
 <ul>
-<li>考虑一个训练集 $\mathcal{D}={(x_i,y_i)}^N_{i=1}$，具有$N$个多变量的时间序列 $x_i \in \mathcal{X}$ 和对应的标签 $y_i \in \mathcal{Y}$。</li>
+<li>考虑一个训练集$\mathcal{D}=\left\{\left(\mathbf{x}_{i}, y_{i}\right)\right\}_{i=1}^{N}$ ，具有$N$个多变量时间序列 $x_i \in \mathcal{X}$ 和对应的标签 $y_i \in \mathcal{Y}$。</li>
 <li>每个时间序列 $\mathbf{x}_{i}=\left\{\mathbf{x}_{i}^{t}\right\}_{t=1}^{T_{i}}$的长度都为 $T_i\in\mathcal{T}$。</li>
 <li>$\mathcal{S}$表示包含所有传感器的集合，共$d$维（即变量最大维度为$d$）；$\mathcal{S}_i \subseteq \mathcal{S}$表示不同的传感器组合，其下标 $i$与 $\mathbf{x}_{i}$ 中的下标对应，表示当前组合包含的可用传感器共$d_i$维，$1 \leq d_{i} \leq d$。</li>
 <li>对于某个时刻$t$来说，$\mathbf{x}_{i}^{t}$ 是 一个 $d_i$ 维的向量，即 $\mathbf{x}_{i}^{t} \in \mathbb{R}^{d_{i}}$。</li>
@@ -165,21 +165,30 @@
   <entry>
     <title>Knowledge-about-pytorch</title>
     <url>/andromeda.github.io/2020/07/11/Knowledge-about-pytorch/</url>
-    <content><![CDATA[<h1 id="torch-Tensor-和torch-tensor的区别"><a href="#torch-Tensor-和torch-tensor的区别" class="headerlink" title="torch.Tensor 和torch.tensor的区别"></a>torch.Tensor 和torch.tensor的区别</h1><p>在Pytorch中，torch.Tensor和torch.tensor都用于生成新的张量。</p>
-<h3 id="torch-Tensor"><a href="#torch-Tensor" class="headerlink" title="torch.Tensor()"></a>torch.Tensor()</h3><p>torch.Tensor() 是Python类，更明确的说，是默认张量类型torch.FloatTensor()的别名，torch.Tensor([1,2]) 会调用Tensor类的构造函数<strong>init</strong>，生成单精度浮点类型的张量。</p>
-<h3 id="torch-tensor"><a href="#torch-tensor" class="headerlink" title="torch.tensor()"></a>torch.tensor()</h3><p>torch.tensor()仅仅是Python的函数，函数原型是：</p>
+    <content><![CDATA[<h3 id="torch-tensor"><a href="#torch-tensor" class="headerlink" title="torch.tensor"></a>torch.tensor</h3><ol>
+<li><h5 id="torch-Tensor-和torch-tensor的区别"><a href="#torch-Tensor-和torch-tensor的区别" class="headerlink" title="torch.Tensor 和torch.tensor的区别"></a>torch.Tensor 和torch.tensor的区别</h5><p>在Pytorch中，torch.Tensor和torch.tensor都用于生成新的张量。</p>
+</li>
+</ol>
+<ul>
+<li><p>torch.Tensor()</p>
+<p>torch.Tensor() 是Python类，更明确的说，是默认张量类型torch.FloatTensor()的别名，torch.Tensor([1,2]) 会调用Tensor类的构造函数<strong>init</strong>，生成单精度浮点类型的张量。</p>
+</li>
+<li><p>torch.tensor()</p>
+<p>torch.tensor()仅仅是Python的函数，函数原型是：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">torch.tensor(data, dtype&#x3D;None, device&#x3D;None, requires_grad&#x3D;False)</span><br></pre></td></tr></table></figure>
 <p>其中data可以是：list, tuple, array, scalar等类型。torch.tensor()可以从data中的数据部分做拷贝（而不是直接引用），根据原始数据类型生成相应的torch.LongTensor，torch.FloatTensor，torch.DoubleTensor。</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; a&#x3D;torch.Tensor([1,2])</span><br><span class="line">&gt;&gt;&gt; a.type()</span><br><span class="line">&#39;torch.FloatTensor&#39;</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; a &#x3D; torch.tensor([1, 2])</span><br><span class="line">&gt;&gt;&gt; a.type()</span><br><span class="line">&#39;torch.LongTensor&#39;</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; a &#x3D; torch.tensor([1., 2.])</span><br><span class="line">&gt;&gt;&gt; a.type()</span><br><span class="line">&#39;torch.FloatTensor&#39;</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; a &#x3D; np.zeros(2, dtype&#x3D;np.float64)</span><br><span class="line">&gt;&gt;&gt; a &#x3D; torch.tensor(a)</span><br><span class="line">&gt;&gt;&gt; a.type()</span><br><span class="line">torch.DoubleTensor</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="numpy"><a href="#numpy" class="headerlink" title="numpy"></a>numpy</h3><ol>
+<li><h5 id="numpy-concatenate"><a href="#numpy-concatenate" class="headerlink" title="numpy.concatenate"></a>numpy.concatenate</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">numpy.concatenate((a1, a2, ...), axis&#x3D;0, out&#x3D;None)</span><br></pre></td></tr></table></figure>
+<p>numpy.concatenate将具有相同结构的array序列结合成一个array，axis是拼接方向，0为横轴，1为纵轴。axis=0，拼接方向为横轴，需要纵轴结构相同，拼接方向可以理解为拼接完成后数量发生变化的方向。</p>
+</li>
+</ol>
 ]]></content>
       <tags>
         <tag>coding</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>newpaper</title>
-    <url>/andromeda.github.io/2020/07/11/newpaper/</url>
-    <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>newtechnique</title>
@@ -275,6 +284,67 @@
       </categories>
       <tags>
         <tag>technique</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Knowledge about Pytorch Geometric</title>
+    <url>/andromeda.github.io/2020/07/11/Knowledge-about-Pytorch-Geometric/</url>
+    <content><![CDATA[<h1 id="Pytorch-Geometric-学习笔记"><a href="#Pytorch-Geometric-学习笔记" class="headerlink" title="Pytorch Geometric 学习笔记"></a>Pytorch Geometric 学习笔记</h1><h3 id="Data类"><a href="#Data类" class="headerlink" title="Data类"></a>Data类</h3><ul>
+<li><p>定义结点特征及标签</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">x &#x3D; torch.tensor([[2,1], [5,6], [3,7], [12,0]], dtype&#x3D;torch.float)</span><br><span class="line">y &#x3D; torch.tensor([0, 1, 0, 1], dtype&#x3D;torch.float)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>定义边（边的顺序是无关紧要的）</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">edge_index &#x3D; torch.tensor([[0, 1, 2, 0, 3],</span><br><span class="line">                           [1, 0, 1, 3, 2]], dtype&#x3D;torch.long)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>定义图结构</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import torch</span><br><span class="line">from torch_geometric.data import Data</span><br><span class="line">data &#x3D; Data(x&#x3D;x, y&#x3D;y, edge_index&#x3D;edge_index)</span><br><span class="line">&gt;&gt;&gt; Data(edge_index&#x3D;[2, 5], x&#x3D;[4, 2], y&#x3D;[4])</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="InMemoryDataset"><a href="#InMemoryDataset" class="headerlink" title="InMemoryDataset"></a>InMemoryDataset</h3><blockquote>
+<p>适用于可以全部放进内存中的小数据集</p>
+</blockquote>
+<ul>
+<li><p>raw_file_names()：返回一个包含所有未处理过的数据文件的文件名的列表，起始也可以返回一个空列表。</p>
+</li>
+<li><p>processed_file_names()：返回一个包含所有处理过的数据文件的文件名的列表。</p>
+</li>
+<li><p>download()：如果在数据加载前需要先下载，则在这里定义下载过程，下载到 self.raw_dir 中定义的文件夹位置；如果不需要下载，返回 pass 即可。</p>
+</li>
+<li><p>process()：这是最重要的一个函数，我们需要在这个函数里把数据处理成一个Data对象。</p>
+<p><em>根据torchvision的习惯，每一个数据集都需要指定一个根目录，根目录下面需要分为两个文件夹，一个是raw_dir，这个表示下载的原始数据的存放位置，另一个是processed_dir，表示处理后的数据集存放位置。</em></p>
+<p><em>另外，每一个数据集函数都可以传递函数transform，pre_transform和pre_filter，默认为None。transform函数用于数据对象被加载使用之前进行的动态转换（一般用于数据增强）；pre_transform函数将数据对象保存到磁盘以前进行的转换，也就是得到processed_dir内数据文件之前对其调用（一般用于只需要计算一次的复杂预处理过程）；pre_filter函数在数据进行保存之前进行过滤。</em></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import torch</span><br><span class="line">from torch_geometric.data import InMemoryDataset</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">class MyOwnDataset(InMemoryDataset):</span><br><span class="line">    def __init__(self, root, transform&#x3D;None, pre_transform&#x3D;None):</span><br><span class="line">        super(MyOwnDataset, self).__init__(root, transform, pre_transform)</span><br><span class="line">        self.data, self.slices &#x3D; torch.load(self.processed_paths[0])</span><br><span class="line"> </span><br><span class="line">    @property #装饰器创建只读属性，可防止属性被修改</span><br><span class="line">    def raw_file_names(self):</span><br><span class="line">        return [&#39;some_file_1&#39;, &#39;some_file_2&#39;, ...]</span><br><span class="line"> </span><br><span class="line">    @property</span><br><span class="line">    def processed_file_names(self):</span><br><span class="line">        return [&#39;data.pt&#39;]</span><br><span class="line"> </span><br><span class="line">    def download(self):</span><br><span class="line">        # Download to &#96;self.raw_dir&#96;.</span><br><span class="line"> </span><br><span class="line">    def process(self):</span><br><span class="line">        # Read data into huge &#96;Data&#96; list.</span><br><span class="line">        data_list &#x3D; [...]</span><br><span class="line"> </span><br><span class="line">        if self.pre_filter is not None:</span><br><span class="line">            data_list [data for data in data_list if self.pre_filter(data)]</span><br><span class="line"> </span><br><span class="line">        if self.pre_transform is not None:</span><br><span class="line">            data_list &#x3D; [self.pre_transform(data) for data in data_list]</span><br><span class="line"> </span><br><span class="line">        data, slices &#x3D; self.collate(data_list)</span><br><span class="line">        torch.save((data, slices), self.processed_paths[0])</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>函数内首先需要读取原始数据并创建一个Data对象的列表，并存储到processed_dir目录下面。直接存储和使用这个python-list时间代价很高，所以先调用torch_geometric.data.InMemoryDataset.collate() 函数将列表转换为一个torch_geometric.data.Data对象。处理后的数据被整合到了一个数据对象中（作为返回值），同时返回一个slices字典来获取到这个数据对象中单个数据，所以总结下来process过程一共分四步：加载数据创建列表；进行各种处理过程；调用collate()函数；存储本地。最后在数据类的构造函数中加载数据集并赋值给self.data和self.slices。</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="Dataset"><a href="#Dataset" class="headerlink" title="Dataset"></a>Dataset</h3><blockquote>
+<p>适用于不能一次性放进内存中的大数据集，大数据集一般不会直接加载到内存中，构建数据集的时候需要继承父类torch_geometric.data.Dataset。在上面构建数据集时，重写了四个函数，此处还需实现两个函数：</p>
+<p>（1）torch_geometric.data.Dataset.len()：返回数据集的文件个数。</p>
+<p>（2）torch_geometric.data.Dataset.get()：实现对单个数据（图数据集的话一般是单个图）的加载逻辑。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import os.path as osp</span><br><span class="line"></span><br><span class="line">import torch</span><br><span class="line"># 这里就不能用InMemoryDataset了</span><br><span class="line">from torch_geometric.data import Dataset</span><br><span class="line"></span><br><span class="line">class MyDataset(Dataset):</span><br><span class="line">    # 默认预处理函数的参数都是None</span><br><span class="line">    def __init__(self, root, transform&#x3D;None, pre_transform&#x3D;None):</span><br><span class="line">        super(MyDataset, self).__init__(root, transform, pre_transform)</span><br><span class="line"></span><br><span class="line">    @property</span><br><span class="line">    def raw_file_names(self):</span><br><span class="line">        return [&#39;file_1&#39;, &#39;file_2&#39;]</span><br><span class="line"></span><br><span class="line">    @property</span><br><span class="line">    def processed_file_names(self):</span><br><span class="line">        # 一次无法加载所有数据，所以对数据进行了分解</span><br><span class="line">        return [&#39;data1.pt&#39;, &#39;data2.pt&#39;, &#39;data3.pt&#39;]</span><br><span class="line"></span><br><span class="line">    def download(self):</span><br><span class="line">        # Download to raw_dir</span><br><span class="line">        pass</span><br><span class="line"></span><br><span class="line">    def process(self):</span><br><span class="line">        i &#x3D; 0</span><br><span class="line">        # 遍历每一个文件路径</span><br><span class="line">        for raw_path in self.raw_paths:</span><br><span class="line">            data &#x3D; Data(...)</span><br><span class="line"></span><br><span class="line">            if self.pre_filter is not None and not self.pre_filter(data):</span><br><span class="line">                continue</span><br><span class="line"></span><br><span class="line">            if self.pre_transform is not None:</span><br><span class="line">                data &#x3D; self.pre_transform(data)</span><br><span class="line"></span><br><span class="line">            torch.save(data, osp.join(self.processed_dir, &#39;data_&#123;&#125;.pt&#39;.format(i)))</span><br><span class="line">            i +&#x3D; 1</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    def len(self):</span><br><span class="line">        return len(self.processed_file_names)</span><br><span class="line"></span><br><span class="line">    def get(self, idx):</span><br><span class="line">        data &#x3D; torch.load(osp.join(self.processed_dir, &#39;data&#123;&#125;.pt&#39;,format(idx)))</span><br><span class="line">        return data</span><br></pre></td></tr></table></figure>
+<p>其中transform、pre_transform和pre_filter都是函数句柄（callable），具体说明如下：<br>（1）transform接受参数类型为torch_geometric.data.Data并且返回一个转换后的版本（数据类型不变），在每一次数据加载到程序之前都会默认调用进行数据转换。<br>（2）pre_transform接收参数类型为torch_geometric.data.Data，返回转换后的版本，在数据被存储到硬盘之前进行转换（只发生一次）。<br>（3）pre_filter接受参数类型为torch_geometric.data.Data，返回布尔类型结果，相当于对原始数据的一个mask。</p>
+<h3 id="DataLoader"><a href="#DataLoader" class="headerlink" title="DataLoader"></a>DataLoader</h3><p>这个类可以帮助我们将数据按 batch 传给 model，需要制定 batch_size 和 dataset：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">loader &#x3D; DataLoader(dataset, batch_size&#x3D;512, shuffle&#x3D;True)</span><br></pre></td></tr></table></figure>
+<p>每个 loader 的循环都返回一个 Batch 对象：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">for batch in loader:</span><br><span class="line">    batch</span><br><span class="line">&gt;&gt;&gt; Batch(x&#x3D;[1024, 21], edge_index&#x3D;[2, 1568], y&#x3D;[512], batch&#x3D;[1024])</span><br></pre></td></tr></table></figure>
+<h3 id="MessagePassing"><a href="#MessagePassing" class="headerlink" title="MessagePassing"></a>MessagePassing</h3><p>MessagePassing是node embedding的重要方法，公式如下：</p>
+<script type="math/tex; mode=display">
+\mathbf{x}_{i}^{(k)}=\gamma^{(k)}\left(\mathbf{x}_{i}^{(k-1)}, \square_{j \in \mathcal{N}(i)} \phi^{(k)}\left(\mathbf{x}_{i}^{(k-1)}, \mathbf{x}_{j}^{(k-1)}, \mathbf{e}_{i, j}\right)\right)</script><p>其中，x 表示表格节点的 embedding，e 表示边的特征，ϕ 表示 message 函数，□ 表示聚合 aggregation 函数，γ 表示 update 函数。上标表示层的 index，比如说，当 k = 1 时，x 则表示所有输入网络的图结构的数据。</p>
+<ul>
+<li>propagate(edge_index, size=None, **kwargs)：这个函数最终会调用 message 和 update 函数。</li>
+</ul>
+<ul>
+<li>message(**kwargs)：这个函数定义了对于每个节点对 (xi,xj)，怎样生成信息（message）。</li>
+</ul>
+<ul>
+<li>update(aggr_out, **kwargs)：这个函数利用聚合好的信息（message）更新每个节点的 embedding。</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>coding</tag>
       </tags>
   </entry>
 </search>
