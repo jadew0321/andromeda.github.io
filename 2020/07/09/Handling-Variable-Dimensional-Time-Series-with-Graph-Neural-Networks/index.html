@@ -106,13 +106,13 @@
 </ul>
 <p>模型总体架构示意图如下所示：</p>
 <p><img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/09/Handling-Variable-Dimensional-Time-Series-with-Graph-Neural-Networks/1.jpg?raw=true" alt="1"></p>
-<h2 id="Data-Processing"><a href="#Data-Processing" class="headerlink" title="Data Processing"></a>Data Processing</h2><ul>
+<h3 id="Data-Processing"><a href="#Data-Processing" class="headerlink" title="Data Processing"></a>Data Processing</h3><ul>
 <li><p>Details</p>
 <p>首先确定最大变量维度d，所有变量组合的维度$1 \leq d{i} \leq d$。如左下角的Input Time Series(x) 所示，对第二维缺失传感器数值的维度进行mean-imputed，即该传感器在其他实例中可用时的平均值，预处理后的多变量时序数据$\mathbf{x}{i}$中每个时刻的输入都是一个d维向量。</p>
 <p><em>这个操作实质上是为了能把等长维度的数据喂给GRU网络作为输入。</em></p>
 </li>
 </ul>
-<h2 id="Conditioning-Module"><a href="#Conditioning-Module" class="headerlink" title="Conditioning Module"></a>Conditioning Module</h2><ul>
+<h3 id="Conditioning-Module"><a href="#Conditioning-Module" class="headerlink" title="Conditioning Module"></a>Conditioning Module</h3><ul>
 <li><p>Details</p>
 <ul>
 <li><p>在图表示学习的启发下，将每一个可用的传感器看作一个结点（vertices）。两个结点之间的关系定义为边（edges）。对应于包含全部传感器的组合$\mathcal{S}$，考虑用图$\mathcal{G}(\mathcal{V}, \mathcal{E})$来表示，每个$s\in\mathcal{S}$ 对应一个结点$v_s\in \mathcal{V}$，每个结点$v_s$的邻节点用 <script type="math/tex">\mathcal{N}_{\mathcal{G}}\left(v_{s}\right)</script> 表示。</p>
@@ -144,7 +144,7 @@
 </ul>
 </li>
 </ul>
-<h2 id="Core-Dynamics-Module"><a href="#Core-Dynamics-Module" class="headerlink" title="Core Dynamics Module"></a>Core Dynamics Module</h2><ul>
+<h3 id="Core-Dynamics-Module"><a href="#Core-Dynamics-Module" class="headerlink" title="Core Dynamics Module"></a>Core Dynamics Module</h3><ul>
 <li><p>Details</p>
 <ul>
 <li>Core Dynamics Module 包含一个gated RNN模型，文中采用GRU，当然也可以用LSTM等。</li>
