@@ -6,7 +6,7 @@
   <link href="/andromeda.github.io/atom.xml" rel="self"/>
   
   <link href="https://jadew0321.github.io/andromeda.github.io/"/>
-  <updated>2020-07-22T02:40:54.320Z</updated>
+  <updated>2020-07-22T02:45:56.599Z</updated>
   <id>https://jadew0321.github.io/andromeda.github.io/</id>
   
   <author>
@@ -18,16 +18,20 @@
   
   <entry>
     <title>Graph Attention Networks</title>
-    <link href="https://jadew0321.github.io/andromeda.github.io/2020/07/11/Graph%20Attention%20Networks/"/>
-    <id>https://jadew0321.github.io/andromeda.github.io/2020/07/11/Graph%20Attention%20Networks/</id>
-    <published>2020-07-11T03:33:32.000Z</published>
-    <updated>2020-07-22T02:40:54.320Z</updated>
+    <link href="https://jadew0321.github.io/andromeda.github.io/2020/07/22/Graph%20Attention%20Networks/"/>
+    <id>https://jadew0321.github.io/andromeda.github.io/2020/07/22/Graph%20Attention%20Networks/</id>
+    <published>2020-07-22T02:30:32.000Z</published>
+    <updated>2020-07-22T02:45:56.599Z</updated>
     
     <summary type="html">
     
     </summary>
     
     
+      <category term="GNN" scheme="https://jadew0321.github.io/andromeda.github.io/categories/GNN/"/>
+    
+    
+      <category term="paper" scheme="https://jadew0321.github.io/andromeda.github.io/tags/paper/"/>
     
   </entry>
   

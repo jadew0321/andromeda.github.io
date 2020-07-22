@@ -245,7 +245,13 @@
   </entry>
   <entry>
     <title>Graph Attention Networks</title>
-    <url>/andromeda.github.io/2020/07/11/Graph%20Attention%20Networks/</url>
+    <url>/andromeda.github.io/2020/07/22/Graph%20Attention%20Networks/</url>
     <content><![CDATA[]]></content>
+      <categories>
+        <category>GNN</category>
+      </categories>
+      <tags>
+        <tag>paper</tag>
+      </tags>
   </entry>
 </search>
