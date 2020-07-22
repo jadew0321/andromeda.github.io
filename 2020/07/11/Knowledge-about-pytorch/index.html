@@ -82,11 +82,37 @@ torch.Te,">
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a&#x3D;torch.Tensor([1,2])</span><br><span class="line">&gt;&gt;&gt; a.type()</span><br><span class="line">&#39;torch.FloatTensor&#39;</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; a &#x3D; torch.tensor([1, 2])</span><br><span class="line">&gt;&gt;&gt; a.type()</span><br><span class="line">&#39;torch.LongTensor&#39;</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; a &#x3D; torch.tensor([1., 2.])</span><br><span class="line">&gt;&gt;&gt; a.type()</span><br><span class="line">&#39;torch.FloatTensor&#39;</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; a &#x3D; np.zeros(2, dtype&#x3D;np.float64)</span><br><span class="line">&gt;&gt;&gt; a &#x3D; torch.tensor(a)</span><br><span class="line">&gt;&gt;&gt; a.type()</span><br><span class="line">torch.DoubleTensor</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h3 id="numpy"><a href="#numpy" class="headerlink" title="numpy"></a>numpy</h3><ol>
-<li><h5 id="numpy-concatenate"><a href="#numpy-concatenate" class="headerlink" title="numpy.concatenate"></a>numpy.concatenate</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">numpy.concatenate((a1, a2, ...), axis&#x3D;0, out&#x3D;None)</span><br></pre></td></tr></table></figure>
-<p>numpy.concatenate将具有相同结构的array序列结合成一个array，axis是拼接方向，0为横轴，1为纵轴。axis=0，拼接方向为横轴，需要纵轴结构相同，拼接方向可以理解为拼接完成后数量发生变化的方向。</p>
+<h3 id="torch-cat"><a href="#torch-cat" class="headerlink" title="torch.cat()"></a>torch.cat()</h3><ol>
+<li><p>torch.cat</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">A &#x3D; torch.ones(2, 3)</span><br><span class="line">B &#x3D; 2*torch.ones(4, 3)</span><br><span class="line">C &#x3D; torch.cat( (A, B), 0)         #按维数0（行）拼接</span><br><span class="line">&gt;&gt;&gt; C</span><br><span class="line">tensor([[ 1.,  1.,  1.],</span><br><span class="line">         [ 1.,  1.,  1.],</span><br><span class="line">         [ 2.,  2.,  2.],</span><br><span class="line">         [ 2.,  2.,  2.],</span><br><span class="line">         [ 2.,  2.,  2.],</span><br><span class="line">         [ 2.,  2.,  2.]])</span><br><span class="line">D&#x3D;2*torch.ones(2, 4)               #2x4的张量（矩阵）</span><br><span class="line">&gt;&gt;&gt; C &#x3D; torch.cat( (A, D), 1)      #按维数1（列）拼接</span><br><span class="line">&gt;&gt;&gt; C</span><br><span class="line">tensor([[ 1.,  1.,  1.,  2.,  2.,  2.,  2.],</span><br><span class="line">        [ 1.,  1.,  1.,  2.,  2.,  2.,  2.]])</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
+<h3 id="torch-nn-init-normal"><a href="#torch-nn-init-normal" class="headerlink" title="torch.nn.init.normal"></a>torch.nn.init.normal</h3><ul>
+<li><p>从均值为0，方差为1的高斯分布中初始化</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">torch.nn.init.normal_(tensor, mean&#x3D;0, std&#x3D;1)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>kaiming高斯初始化</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">torch.nn.init.kaiming_normal_(tensor, a&#x3D;0, mode&#x3D;&#39;fan_in&#39;, nonlinearity&#x3D;&#39;leaky_relu&#39;)</span><br></pre></td></tr></table></figure>
+<p>由FAIR的大牛Kaiming He提出来的卷积层权值初始化方法，目的是使得每一卷积层的输出的方差都为1，其中，$a$ 为Relu或Leaky Relu的负半轴斜率，$nl$ 为输入的维数，即$nl=卷积核边长^2*channel数$，mode表示是让前向传播还是反向传播的输出的方差为1，nonlinearity可以选择是relu还是leaky_relu。</p>
+</li>
+</ul>
+<script type="math/tex; mode=display">
+W_{l} \sim N(0, \sqrt{\left.\frac{2}{\left(1+a^{2}\right) \times n_{l}}\right)}</script><ul>
+<li><p>xavier高斯初始化</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">torch.nn.init.xavier_normal_(tensor, gain&#x3D;1)</span><br></pre></td></tr></table></figure>
+<p>Glorot正态分布初始化方法，也称作Xavier正态分布初始化，参数由0均值，标准差为sqrt(2 / (fan_in + fan_out))的正态分布产生，其中fan_in和fan_out是分别权值张量的输入和输出元素数目. 这种初始化同样是为了保证输入输出的方差不变，但是原论文是基于线性函数推导的，同时在tanh激活函数上有很好的效果，但不适用于ReLU激活函数。</p>
+<script type="math/tex; mode=display">
+\operatorname{std}=\operatorname{gain} \times \sqrt{\frac{2}{\text { fan }_{-} \text {in }+\text { fan_out }}}</script></li>
+</ul>
+<h3 id="numpy"><a href="#numpy" class="headerlink" title="numpy"></a>numpy</h3><h4 id="numpy-concatenate"><a href="#numpy-concatenate" class="headerlink" title="numpy.concatenate"></a>numpy.concatenate</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">numpy.concatenate((a1, a2, ...), axis&#x3D;0, out&#x3D;None)</span><br></pre></td></tr></table></figure>
+<p>numpy.concatenate将具有相同结构的array序列结合成一个array，axis是拼接方向，0为横轴，1为纵轴。axis=0，拼接方向为横轴，需要纵轴结构相同，拼接方向可以理解为拼接完成后数量发生变化的方向。</p>
+<h4 id="numpy-load"><a href="#numpy-load" class="headerlink" title="numpy.load"></a>numpy.load</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">train_data &#x3D; np.load(&#39;J:&#x2F;MyJupyterNotebook&#x2F;5_GNN&#x2F;HAR&#x2F;X_train.npy&#39;)</span><br></pre></td></tr></table></figure>
+<p>numpy.load() 可用来导入.npy文件形式的数据。</p>
+<h4 id="numpy-mean"><a href="#numpy-mean" class="headerlink" title="numpy.mean()"></a>numpy.mean()</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mean_vector &#x3D; numpy.mean(x2),axis&#x3D;0)</span><br></pre></td></tr></table></figure>
+<p>numpy.mean()可用来求取均值，axis=0表示按列取均值</p>
+<h4 id="numpy-setdiff1d"><a href="#numpy-setdiff1d" class="headerlink" title="numpy.setdiff1d"></a>numpy.setdiff1d</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">active_nodes &#x3D; np.setdiff1d(all_nodes, missing_nodes)</span><br></pre></td></tr></table></figure>
+<p>可用来取两个集合的补集</p>
+<h3 id="sklearn"><a href="#sklearn" class="headerlink" title="sklearn"></a>sklearn</h3><h4 id="zscore"><a href="#zscore" class="headerlink" title="zscore"></a>zscore</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from sklearn import preprocessing</span><br><span class="line">zscore &#x3D; preprocessing.StandardScaler()</span><br><span class="line">x &#x3D; zscore.fit_transform(x.transpose())</span><br></pre></td></tr></table></figure>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
