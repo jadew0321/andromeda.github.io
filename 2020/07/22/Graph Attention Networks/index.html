@@ -162,7 +162,20 @@ e_{i j}=a\left(\mathbf{W} \vec{h}_{i}, \mathbf{W} \vec{h}_{j}\right)</script><p>
 <p><img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/22/Graph%20Attention%20Networks/Snipaste_2020-07-24_14-43-23.png?raw=true" alt="Snipaste_2020-07-24_14-43-23" style="zoom:50%;"></p>
 </li>
 </ul>
-<h1 id="Comparisons-to-Related-Work"><a href="#Comparisons-to-Related-Work" class="headerlink" title="Comparisons to Related Work"></a>Comparisons to Related Work</h1><blockquote>
+<h1 id="Comparisons-to-Related-Work"><a href="#Comparisons-to-Related-Work" class="headerlink" title="Comparisons to Related Work"></a>Comparisons to Related Work</h1><p>GA层直接解决了用神经网络处理图结构数据方法中存在的几个问题：</p>
+<ol>
+<li>计算上高效：自注意力层的操作可以并行化到所有的边，输出特征的计算也可以并行化到所有的节点，multi-head attention 中每一头的计算也可以并行化。 </li>
+<li>与GCNs不同的是，GAT模型允许(隐式地)为同一邻接节点分配不同的重要性，从而实现了模型容量的飞跃；此外，分析学习到的注意力系数可能会在可解释性方面带来一些好处。</li>
+<li>注意力机制以一种共享的方式应用于图中的所有边，因此它不依赖于预先访问全局图结构或其所有节点的(特征)(这是许多先前技术的限制)。<ul>
+<li>不要求图是无向的，如果 $j$ -&gt;$i$ 不存在，我们只需省去计算$\alpha_{i j}$即可。</li>
+<li>使得模型能够处理inductive任务，能够在训练中完全看不到的图形上评估模型。</li>
+</ul>
+</li>
+<li>无需对节点的重要性进行预先排序</li>
+<li>GAT模型是MoNet的一个特例，但与MoNet相比，GAT模型使用节点特征进行相似性计算，而不是节点的结构属性(这需要预先知道图形结构)。</li>
+</ol>
+<p>文章还提出了一个利用稀疏矩阵操作版本的GAT层，</p>
+<blockquote>
 <ol>
 <li>Paolo Frasconi, Marco Gori, and Alessandro Sperduti. A general framework for adaptive processing<br>of data structures. IEEE transactions on Neural Networks, 9(5):768–786, 1998.</li>
 <li>A. Sperduti and A. Starita. Supervised neural networks for the classification of structures. Trans.<br>Neur. Netw., 8(3):714–735, May 1997. ISSN 1045-9227. doi: 10.1109/72.572108.</li>
