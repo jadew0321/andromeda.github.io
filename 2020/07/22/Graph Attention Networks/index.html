@@ -80,13 +80,15 @@
 </li>
 <li><p>卷积的推广</p>
 <p>然而，人们对将卷积推广到图域越来越感兴趣。这方面的进展通常分为谱方法和非谱方法。</p>
+</li>
+</ul>
 <ol>
 <li><p>谱方法（基于图的谱表示）</p>
 <ul>
 <li><p>进展：计算图的拉普拉斯特征分解在频域里定义卷积操作；[7]</p>
 <p>缺点：计算复杂，并且不具有空域局部滤波器特性。</p>
 </li>
-<li><p>进展：进行具有平滑系数的谱滤波器的参数化；[8]</p>
+<li><p>进展：进行具有平滑系数的谱滤波器的参数化；[8</p>
 <p>缺点：计算依然复杂</p>
 </li>
 <li><p>进展：通过图拉普拉斯算子的切比雪夫展开式去近似滤波器，省去了特征根分解的步骤，并具有空域局部滤波器特性；[9]</p>
@@ -96,8 +98,6 @@
 </ul>
 </li>
 </ol>
-</li>
-</ul>
 <blockquote>
 <p> 然而，在所有上述谱方法中，学习到的滤波器依赖于拉普拉斯特征基，而拉普拉斯特征基依赖于图结构。因此，针对特定结构训练的模型不能直接应用于具有不同结构的图。</p>
 </blockquote>
@@ -170,7 +170,9 @@ e_{i j}=a\left(\mathbf{W} \vec{h}_{i}, \mathbf{W} \vec{h}_{j}\right)</script><p>
 <li>无需对节点的重要性进行预先排序</li>
 <li>GAT模型是MoNet的一个特例，但与MoNet相比，GAT模型使用节点特征进行相似性计算，而不是节点的结构属性(这需要预先知道图形结构)。</li>
 </ol>
+<blockquote>
 <p>文章还提出了一个利用稀疏矩阵操作版本的GAT层，降低存储复杂度，并允许在更大的图数据集上执行GAT模型。但由于使用的是rank-2  tensors，它限制了GAT的批处理能力，尤其是对具有多个不同图结构的数据集来说。这也是未来的一项研究工作。  </p>
+</blockquote>
 <h1 id="Evaluation"><a href="#Evaluation" class="headerlink" title="Evaluation"></a>Evaluation</h1><h3 id="Dataset"><a href="#Dataset" class="headerlink" title="Dataset"></a>Dataset</h3><p><img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/22/Graph%20Attention%20Networks/Snipaste_2020-07-24_15-23-08.png?raw=true" alt="Snipaste_2020-07-24_15-23-08"></p>
 <ul>
 <li><p>Transductive Learning：</p>
