@@ -304,10 +304,8 @@
 </li>
 </ul>
 <h1 id="GAT-Architecture"><a href="#GAT-Architecture" class="headerlink" title="GAT Architecture"></a>GAT Architecture</h1><h3 id="Graph-Attentional-Layer"><a href="#Graph-Attentional-Layer" class="headerlink" title="Graph Attentional Layer"></a>Graph Attentional Layer</h3><ul>
-<li><p>输入形式</p>
+<li><p>输入输出</p>
 <p>GA层的输入是一组节点特征，记为 $\mathbf{h}=\left\{\vec{h}_{1}, \vec{h}_{2}, \ldots, \vec{h}_{N}\right\}, \vec{h}_{i} \in \mathbb{R}^{F}$ ，其中 $N$ 是节点的个数，$F$ 是每个节点的特征数。</p>
-</li>
-<li><p>输出形式</p>
 <p>GA层的输出是一组新的节点特征，记为 $\mathbf{h}^{\prime}=\left\{\vec{h}_{1}^{\prime}, \vec{h}_{2}^{\prime}, \ldots, \vec{h}_{N}^{\prime}\right\}, \vec{h}_{i}^{\prime} \in \mathbb{R}^{F^{\prime}}$，其中节点个数$N$不变，每个节点的特征数可变化为 $F^{\prime}$。</p>
 </li>
 <li><p>共享线性变换</p>
@@ -333,15 +331,22 @@ e_{i j}=a\left(\mathbf{W} \vec{h}_{i}, \mathbf{W} \vec{h}_{j}\right)</script><p>
 <p><img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/22/Graph%20Attention%20Networks/Snipaste_2020-07-24_11-05-51.png?raw=true" alt="Snipaste_2020-07-24_11-05-51" style="zoom:50%;"></p>
 <ul>
 <li><p>节点特征更新</p>
-<p>在得到归一化的注意力系数之后，可以通过对邻接节点特征的线性组合经过一个非线性激活函数来更新节点自身的特征：</p>
+<p>在得到归一化的注意力系数之后，可以通过对邻接节点特征的线性组合经过一个非线性激活函数来更新节点自身的特征作为输出：</p>
 <script type="math/tex; mode=display">
 \vec{h}_{i}^{\prime}=\sigma\left(\sum_{j \in \mathcal{N}_{i}} \alpha_{i j} \mathbf{W} \vec{h}_{j}\right)</script></li>
 </ul>
-<h3 id="Multi-head"><a href="#Multi-head" class="headerlink" title="Multi-head"></a>Multi-head</h3><p>为了稳定自我注意的学习过程，本文使用多头注意力机制。具体地，$K$ 个独立注意力机制对式4进行变换，然后将其特征串联，得到如下输出特征表示:</p>
 <ul>
-<li><h1 id="点粉丝"><a href="#点粉丝" class="headerlink" title="点粉丝"></a>点粉丝</h1></li>
+<li><p>Multi-head attention </p>
+<p>为了稳定self-attention的学习过程，本文使用多头注意力机制。具体地，使$K$ 个独立注意力机制根据上式进行变换，得到更新的节点输出特征，然后将$K$ 个特征拼接（concat），得到如下输出特征：</p>
+<script type="math/tex; mode=display">
+\vec{h}_{i}^{\prime}=\prod_{k=1}^{K} \sigma\left(\sum_{j \in \mathcal{N}_{i}} \alpha_{i j}^{k} \mathbf{W}^{k} \vec{h}_{j}\right)</script><p>由于加入了multi-head attention，GA层最终返回的输出将包含每个节点的$KF’$个特征 (而不是$F’$)。</p>
+<p>如果 $\vec{h}_{i}^{\prime}$ 是网络的最后一层输出，可以选择对K个独立的注意力机制进行求平均（avg），然后经过非线性激活函数得到最终的输出：</p>
+<script type="math/tex; mode=display">
+\vec{h}_{i}^{\prime}=\sigma\left(\frac{1}{K} \sum_{k=1}^{K} \sum_{j \in \mathcal{N}_{i}} \alpha_{i j}^{k} \mathbf{W}^{k} \vec{h}_{j}\right)</script><p>Multi-head attention mechanism 的示意图如下所示：</p>
+<p><img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/22/Graph%20Attention%20Networks/Snipaste_2020-07-24_14-43-23.png?raw=true" alt="Snipaste_2020-07-24_14-43-23" style="zoom:50%;"></p>
+</li>
 </ul>
-<blockquote>
+<h1 id="Comparisons-to-Related-Work"><a href="#Comparisons-to-Related-Work" class="headerlink" title="Comparisons to Related Work"></a>Comparisons to Related Work</h1><blockquote>
 <ol>
 <li>Paolo Frasconi, Marco Gori, and Alessandro Sperduti. A general framework for adaptive processing<br>of data structures. IEEE transactions on Neural Networks, 9(5):768–786, 1998.</li>
 <li>A. Sperduti and A. Starita. Supervised neural networks for the classification of structures. Trans.<br>Neur. Netw., 8(3):714–735, May 1997. ISSN 1045-9227. doi: 10.1109/72.572108.</li>
