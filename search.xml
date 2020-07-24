@@ -341,7 +341,7 @@ e_{i j}=a\left(\mathbf{W} \vec{h}_{i}, \mathbf{W} \vec{h}_{j}\right)</script><p>
 <p>如果 $\vec{h}_{i}^{\prime}$ 是网络的最后一层输出，可以选择对K个独立的注意力机制进行求平均（avg），然后经过非线性激活函数得到最终的输出：</p>
 <script type="math/tex; mode=display">
 \vec{h}_{i}^{\prime}=\sigma\left(\frac{1}{K} \sum_{k=1}^{K} \sum_{j \in \mathcal{N}_{i}} \alpha_{i j}^{k} \mathbf{W}^{k} \vec{h}_{j}\right)</script><p>Multi-head attention mechanism 的示意图如下所示：</p>
-<p><img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/22/Graph%20Attention%20Networks/Snipaste_2020-07-24_14-43-23.png?raw=true" alt="Snipaste_2020-07-24_14-43-23" style="zoom: 67%;"></p>
+<p>​                                    <img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/22/Graph%20Attention%20Networks/Snipaste_2020-07-24_14-43-23.png?raw=true" alt="Snipaste_2020-07-24_14-43-23" style="zoom:67%;"></p>
 <h1 id="Comparisons-to-Related-Work"><a href="#Comparisons-to-Related-Work" class="headerlink" title="Comparisons to Related Work"></a>Comparisons to Related Work</h1><p>GA层直接解决了用神经网络处理图结构数据方法中存在的几个问题：</p>
 <ol>
 <li>计算上高效：自注意力层的操作可以并行化到所有的边，输出特征的计算也可以并行化到所有的节点，multi-head attention 中每一头的计算也可以并行化。 </li>
