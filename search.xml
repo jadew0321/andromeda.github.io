@@ -304,10 +304,10 @@
 </li>
 </ul>
 <h1 id="GAT-Architecture"><a href="#GAT-Architecture" class="headerlink" title="GAT Architecture"></a>GAT Architecture</h1><h3 id="Graph-Attentional-Layer"><a href="#Graph-Attentional-Layer" class="headerlink" title="Graph Attentional Layer"></a>Graph Attentional Layer</h3><ul>
-<li><p>输入</p>
+<li><p>输入形式</p>
 <p>GA层的输入是一组节点特征，记为 $\mathbf{h}=\left\{\vec{h}_{1}, \vec{h}_{2}, \ldots, \vec{h}_{N}\right\}, \vec{h}_{i} \in \mathbb{R}^{F}$ ，其中 $N$ 是节点的个数，$F$ 是每个节点的特征数。</p>
 </li>
-<li><p>输出</p>
+<li><p>输出形式</p>
 <p>GA层的输出是一组新的节点特征，记为 $\mathbf{h}^{\prime}=\left\{\vec{h}_{1}^{\prime}, \vec{h}_{2}^{\prime}, \ldots, \vec{h}_{N}^{\prime}\right\}, \vec{h}_{i}^{\prime} \in \mathbb{R}^{F^{\prime}}$，其中节点个数$N$不变，每个节点的特征数可变化为 $F^{\prime}$。</p>
 </li>
 <li><p>共享线性变换</p>
@@ -330,7 +330,12 @@ e_{i j}=a\left(\mathbf{W} \vec{h}_{i}, \mathbf{W} \vec{h}_{j}\right)</script><p>
 <p>上述注意力机制，采用共享权重线性变换、Masked self attention 和 LeakyReLU非线性（negative input slope α = 0.2）归一化后的计算公式如下：</p>
 <script type="math/tex; mode=display">
 \alpha_{i j}=\frac{\exp \left(\text { LeakyReLU }\left(\overrightarrow{\mathbf{a}}^{T}\left[\mathbf{W} \vec{h}_{i} \| \mathbf{W} \vec{h}_{j}\right]\right)\right)}{\sum_{k \in \mathcal{N}_{i}} \exp \left(\text { Leaky ReLU }\left(\overrightarrow{\mathbf{a}}^{T}\left[\mathbf{W} \vec{h}_{i} \| \mathbf{W} \vec{h}_{k}\right]\right)\right)}</script><p>其中 T表示转置，||表示拼接。</p>
-<blockquote>
+<p><img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/22/Graph%20Attention%20Networks/Snipaste_2020-07-24_11-05-51.png?raw=true" alt="Snipaste_2020-07-24_11-05-51"></p>
+<ul>
+<li>节点特征更新</li>
+<li></li>
+</ul>
+<h1 id="点粉丝"><a href="#点粉丝" class="headerlink" title="点粉丝"></a>点粉丝</h1><blockquote>
 <ol>
 <li>Paolo Frasconi, Marco Gori, and Alessandro Sperduti. A general framework for adaptive processing<br>of data structures. IEEE transactions on Neural Networks, 9(5):768–786, 1998.</li>
 <li>A. Sperduti and A. Starita. Supervised neural networks for the classification of structures. Trans.<br>Neur. Netw., 8(3):714–735, May 1997. ISSN 1045-9227. doi: 10.1109/72.572108.</li>
