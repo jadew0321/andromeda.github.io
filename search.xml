@@ -335,17 +335,13 @@ e_{i j}=a\left(\mathbf{W} \vec{h}_{i}, \mathbf{W} \vec{h}_{j}\right)</script><p>
 <script type="math/tex; mode=display">
 \vec{h}_{i}^{\prime}=\sigma\left(\sum_{j \in \mathcal{N}_{i}} \alpha_{i j} \mathbf{W} \vec{h}_{j}\right)</script></li>
 </ul>
-<ul>
-<li><p>Multi-head attention </p>
-<p>为了稳定self-attention的学习过程，本文使用多头注意力机制。具体地，使$K$ 个独立注意力机制根据上式进行变换，得到更新的节点输出特征，然后将$K$ 个特征拼接（concat），得到如下输出特征：</p>
+<h3 id="Multi-head-attention"><a href="#Multi-head-attention" class="headerlink" title="Multi-head attention"></a>Multi-head attention</h3><p>为了稳定self-attention的学习过程，本文使用多头注意力机制。具体地，使$K$ 个独立注意力机制根据上式进行变换，得到更新的节点输出特征，然后将$K$ 个特征拼接（concat），得到如下输出特征：</p>
 <script type="math/tex; mode=display">
 \vec{h}_{i}^{\prime}=\prod_{k=1}^{K} \sigma\left(\sum_{j \in \mathcal{N}_{i}} \alpha_{i j}^{k} \mathbf{W}^{k} \vec{h}_{j}\right)</script><p>由于加入了multi-head attention，GA层最终返回的输出将包含每个节点的$KF’$个特征 (而不是$F’$)。</p>
 <p>如果 $\vec{h}_{i}^{\prime}$ 是网络的最后一层输出，可以选择对K个独立的注意力机制进行求平均（avg），然后经过非线性激活函数得到最终的输出：</p>
 <script type="math/tex; mode=display">
 \vec{h}_{i}^{\prime}=\sigma\left(\frac{1}{K} \sum_{k=1}^{K} \sum_{j \in \mathcal{N}_{i}} \alpha_{i j}^{k} \mathbf{W}^{k} \vec{h}_{j}\right)</script><p>Multi-head attention mechanism 的示意图如下所示：</p>
 <p><img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/22/Graph%20Attention%20Networks/Snipaste_2020-07-24_14-43-23.png?raw=true" alt="Snipaste_2020-07-24_14-43-23" style="zoom: 67%;"></p>
-</li>
-</ul>
 <h1 id="Comparisons-to-Related-Work"><a href="#Comparisons-to-Related-Work" class="headerlink" title="Comparisons to Related Work"></a>Comparisons to Related Work</h1><p>GA层直接解决了用神经网络处理图结构数据方法中存在的几个问题：</p>
 <ol>
 <li>计算上高效：自注意力层的操作可以并行化到所有的边，输出特征的计算也可以并行化到所有的节点，multi-head attention 中每一头的计算也可以并行化。 </li>
@@ -358,7 +354,41 @@ e_{i j}=a\left(\mathbf{W} \vec{h}_{i}, \mathbf{W} \vec{h}_{j}\right)</script><p>
 <li>无需对节点的重要性进行预先排序</li>
 <li>GAT模型是MoNet的一个特例，但与MoNet相比，GAT模型使用节点特征进行相似性计算，而不是节点的结构属性(这需要预先知道图形结构)。</li>
 </ol>
-<p>文章还提出了一个利用稀疏矩阵操作版本的GAT层，</p>
+<p>文章还提出了一个利用稀疏矩阵操作版本的GAT层，降低存储复杂度，并允许在更大的图数据集上执行GAT模型。但由于使用的是rank-2  tensors，它限制了GAT的批处理能力，尤其是对具有多个不同图结构的数据集来说。这也是未来的一项研究工作。  </p>
+<h1 id="Evaluation"><a href="#Evaluation" class="headerlink" title="Evaluation"></a>Evaluation</h1><h3 id="Dataset"><a href="#Dataset" class="headerlink" title="Dataset"></a>Dataset</h3><p><img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/22/Graph%20Attention%20Networks/Snipaste_2020-07-24_15-23-08.png?raw=true" alt="Snipaste_2020-07-24_15-23-08"></p>
+<ul>
+<li><p>Transductive Learning：</p>
+<p>Cora、Citeseer、Pubmed是三个无向固定图结构的数据集，适用于Transductive Learning。每个节点都有一个类别标签，节点特征是词向量表示。每一类用20个节点进行训练，500个节点进行验证，1000个节点进行测试。</p>
+</li>
+<li><p>Inductive Learning：</p>
+<p>protein-protein interaction (PPI) 数据集包含不同人类组织对应的不同图结构，适用于Inductive Learning。用其中20个图进行训练，2个图进行验证，2个图进行测试。测试图在训练过程中是完全没有被观察到过的。</p>
+</li>
+</ul>
+<h3 id="State-of-the-art-Methods"><a href="#State-of-the-art-Methods" class="headerlink" title="State-of-the-art Methods"></a>State-of-the-art Methods</h3><ul>
+<li><p>Transductive Learning：</p>
+<p>label propagation (LP)、semi-supervised embedding (SemiEmb)、manifold regularization (ManiReg)、skip-gram based graph embeddings (Deep- Walk)、iterative classification algorithm (ICA)、Planetoid、GCNs、graph convolutional models utilising higher-order Chebyshev filters、MoNet model</p>
+</li>
+<li><p>Inductive Learning：</p>
+<p>GraphSAGE-GCN、GraphSAGE-mean、GraphSAGE-LSTM、GraphSAGE-pool</p>
+</li>
+<li><p>另外，对于这两个任务，还提供了每个节点共享多层感知器(MLP)分类器的性能(它完全不包含图结构)。</p>
+</li>
+</ul>
+<h3 id="Experimental-Setup"><a href="#Experimental-Setup" class="headerlink" title="Experimental Setup"></a>Experimental Setup</h3><ul>
+<li><p>Transductive Learning：</p>
+<p>对于前两个数据集，建立两层GAT模型，第一层$K=8$, $F’=8$，输出特征数为64，经过exponential linear unit (ELU) 非线性函数；第二层用于分类，$K=1$，采用softmax激活函数。为了解决训练集较小的问题，正则化在模型中得到了广泛的应用。在训练中，我们应用L2正则化（$lamda=0.0005$），dropout（$p=0.6$）。</p>
+<p>对于第三个数据集，改变第一层$K=8$，L2正则化（$lamda=0.001$），其他结构和参数保持不变。</p>
+</li>
+<li><p>Inductive Learning：</p>
+<p>采用三层GAT模型，前两层$K=4$，$F’=256$，输出特征为1024，经过ELU 非线性函数；最后一层用于分类，$K=6$，$F’=121$，对输出特征进行平均并经过一个logistic sigmoid 激活函数。由于训练集充足，未采用L2正则化和dropout，但使用了skip connections挑过了中间的注意力层。</p>
+<p>所有模型采用Glorot初始化，采用Adam SGD optimizer（Pubmed数据集学习率取0.01，其余数据集学习率为0.005），最小化交叉熵损失，使用早期停止策略。</p>
+</li>
+</ul>
+<h3 id="Results"><a href="#Results" class="headerlink" title="Results"></a>Results</h3><p>实验结果如下表所示：</p>
+<ol>
+<li>跟GCNs相比，GAT模型在Cora和Citeseer数据集上精度分别提高了1.5%和1.6%，这表明对邻接节点分配不同的注意力系数是有益的。</li>
+<li>跟GraphSAGE相比，GAT在PPI数据集上精度提高了20.5%，说明了GAT模型在inductive任务上的潜力，以及对不同邻接节点分配不同注意力系数的有效性。</li>
+</ol>
 <blockquote>
 <ol>
 <li>Paolo Frasconi, Marco Gori, and Alessandro Sperduti. A general framework for adaptive processing<br>of data structures. IEEE transactions on Neural Networks, 9(5):768–786, 1998.</li>
