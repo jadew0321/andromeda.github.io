@@ -323,19 +323,19 @@ e_{i j}=a\left(\mathbf{W} \vec{h}_{i}, \mathbf{W} \vec{h}_{j}\right)</script><p>
 <p>本文采用Masked graph attention，并且邻接节点是一阶邻接节点（包括节点本身）。</p>
 <p>为了使不同节点间的注意力系数易于比较，使用softmax函数对所有对于节点 $i$ 的注意力系数进行归一化：</p>
 <script type="math/tex; mode=display">
-\alpha_{i j}=\operatorname{softmax}_{j}\left(e_{i j}\right)=\frac{\exp \left(e_{i j}\right)}{\sum_{k \in \mathcal{N}_{i}} \exp \left(e_{i k}\right)}</script></li>
-</ul>
-<p>上述注意力机制，采用共享权重线性变换、Masked self attention 和 LeakyReLU非线性（negative input slope α = 0.2）归一化后的计算公式如下：</p>
+\alpha_{i j}=\operatorname{softmax}_{j}\left(e_{i j}\right)=\frac{\exp \left(e_{i j}\right)}{\sum_{k \in \mathcal{N}_{i}} \exp \left(e_{i k}\right)}</script><p>上述注意力机制，采用共享权重线性变换、Masked self attention 和 LeakyReLU非线性（negative input slope α = 0.2）归一化后的计算公式如下：</p>
 <script type="math/tex; mode=display">
 \alpha_{i j}=\frac{\exp \left(\text { LeakyReLU }\left(\overrightarrow{\mathbf{a}}^{T}\left[\mathbf{W} \vec{h}_{i} \| \mathbf{W} \vec{h}_{j}\right]\right)\right)}{\sum_{k \in \mathcal{N}_{i}} \exp \left(\text { Leaky ReLU }\left(\overrightarrow{\mathbf{a}}^{T}\left[\mathbf{W} \vec{h}_{i} \| \mathbf{W} \vec{h}_{k}\right]\right)\right)}</script><p>其中 T表示转置，||表示拼接。</p>
+</li>
+</ul>
 <p><img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/22/Graph%20Attention%20Networks/Snipaste_2020-07-24_11-05-51.png?raw=true" alt="Snipaste_2020-07-24_11-05-51" style="zoom: 67%;"></p>
 <ul>
 <li><p>节点特征更新</p>
 <p>在得到归一化的注意力系数之后，可以通过对邻接节点特征的线性组合经过一个非线性激活函数来更新节点自身的特征作为输出：</p>
 <script type="math/tex; mode=display">
-\vec{h}_{i}^{\prime}=\sigma\left(\sum_{j \in \mathcal{N}_{i}} \alpha_{i j} \mathbf{W} \vec{h}_{j}\right)</script></li>
+\vec{h}_{i}^{\prime}=\sigma\left(\sum_{j \in \mathcal{N}_{i}} \alpha_{i j} \mathbf{W} \vec{h}_{j}\right)</script><h3 id="Multi-head-attention"><a href="#Multi-head-attention" class="headerlink" title="Multi-head attention"></a>Multi-head attention</h3></li>
 </ul>
-<h3 id="Multi-head-attention"><a href="#Multi-head-attention" class="headerlink" title="Multi-head attention"></a>Multi-head attention</h3><p>为了稳定self-attention的学习过程，本文使用多头注意力机制。具体地，使$K$ 个独立注意力机制根据上式进行变换，得到更新的节点输出特征，然后将$K$ 个特征拼接（concat），得到如下输出特征：</p>
+<p>为了稳定self-attention的学习过程，本文使用多头注意力机制。具体地，使$K$ 个独立注意力机制根据上式进行变换，得到更新的节点输出特征，然后将$K$ 个特征拼接（concat），得到如下输出特征：</p>
 <script type="math/tex; mode=display">
 \vec{h}_{i}^{\prime}=\prod_{k=1}^{K} \sigma\left(\sum_{j \in \mathcal{N}_{i}} \alpha_{i j}^{k} \mathbf{W}^{k} \vec{h}_{j}\right)</script><p>由于加入了multi-head attention，GA层最终返回的输出将包含每个节点的$KF’$个特征 (而不是$F’$)。</p>
 <p>如果 $\vec{h}_{i}^{\prime}$ 是网络的最后一层输出，可以选择对K个独立的注意力机制进行求平均（avg），然后经过非线性激活函数得到最终的输出：</p>
@@ -397,6 +397,10 @@ e_{i j}=a\left(\mathbf{W} \vec{h}_{i}, \mathbf{W} \vec{h}_{j}\right)</script><p>
 <p>​        <img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/22/Graph%20Attention%20Networks/Snipaste_2020-07-24_17-08-14.png?raw=true" alt="Snipaste_2020-07-24_17-08-14"></p>
 <h1 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h1><p>本文提出了图注意力网络(GATs)，这是一种新型的利用masked自注意力层的卷积式神经网络，它能够处理图结构的数据，具有计算简洁、允许不同权重的邻接结点、不依赖于整个图结构等优势，可以处理谱方法的一诸多缺陷，在各数据集上获得了最佳的性能。</p>
 <h1 id="Future-Works"><a href="#Future-Works" class="headerlink" title="Future Works"></a>Future Works</h1><p>有几个潜在的可改进和扩展GATs的未来工作，如克服前述只能处理一个批次数据的实际问题，使得模型能够处理更大的批次数据。另外一个特别有趣的研究方向是利用注意力机制对模型的可解释性进行深入分析。最后，扩展模型以包含边的特征(可能表示节点之间的关系)将允许我们处理更多种问题。</p>
+<h1 id="Understanding"><a href="#Understanding" class="headerlink" title="Understanding"></a>Understanding</h1><ol>
+<li>GAT与GCN本质思想都是将邻接节点的特征聚合到中心节点上（aggregate 运算），利用图上的local stationary 学习新的节点特征，但是两者的实现思路和方法是不同的，GCN是利用图的具体结构，构造拉普拉斯矩阵进行local convolution，而GAT是利用节点之间的相关性，构造attention系数，并且该系数只与节点的特征有关，和图的结构无关。因此GAT的学习能力会更强。</li>
+<li>GAT采用逐点运算，对于有向图来说，可以根据需要选择计算节点之间的attention系数，拜托了GCN中的拉普拉斯矩阵的束缚。并且，注意力系数也仅与节点特征相关，与图结构无关，因此改变图的结构对GAT的影响不大，只需要改变邻接节点个数，重新计算即可，这也是能胜任inductive学习的原因所在。</li>
+</ol>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><blockquote>
 <ol>
 <li>Paolo Frasconi, Marco Gori, and Alessandro Sperduti. A general framework for adaptive processing<br>of data structures. IEEE transactions on Neural Networks, 9(5):768–786, 1998.</li>
