@@ -483,6 +483,7 @@ v^i_t\left(K\right)=\left(\boldsymbol{W}_{GC}\left[i\right]\bigodot\boldsymbol{A
 <p><img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/25/Multistep-Speed-Prediction-on-Traffic-Networks/Snipaste_2020-07-25_15-37-46.png?raw=true" alt="Snipaste_2020-07-25_15-37-46" style="zoom: 50%;"></p>
 </li>
 <li><h5 id="AGC-Seq2Seq-Model"><a href="#AGC-Seq2Seq-Model" class="headerlink" title="AGC-Seq2Seq Model"></a>AGC-Seq2Seq Model</h5><p>为了捕捉时间序列特征并获得多步预测输出，我们采用Seq2Seq模型作为整个方法的基本结构。Seq2Seq模型由两个参数独立、相互连接的RNN模块组成。为了克服RNN输出时间戳固定的问题，Seq2Seq模型对编码器部分的时间序列输入进行编码以使其满足时间依赖，解码器根据 context vector 组织以时间步长排列顺序的目标输出。模型结构如下图所示：</p>
+<p><img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/25/Multistep-Speed-Prediction-on-Traffic-Networks/Snipaste_2020-07-25_15-54-53.png?raw=true" alt="Snipaste_2020-07-25_15-54-53" style="zoom: 67%;"></p>
 <ul>
 <li><p>首先，使用图卷积操作来捕获各路段空间上的特性，生成spatial-temporal variable $v^i_{t-j}\left(K\right)$。</p>
 </li>
@@ -532,6 +533,7 @@ j \in\{0, \cdots, m-1\}
 </ul>
 </li>
 <li><p>在实际模型构件中，我们采用门控循环单元(GRU)作为编码器和解码器的内部结构。内部运算结构如下图所示：</p>
+<p><img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/25/Multistep-Speed-Prediction-on-Traffic-Networks/Snipaste_2020-07-25_16-37-41.png?raw=true" alt="Snipaste_2020-07-25_16-37-41" style="zoom: 67%;"></p>
 <p>计算公式为：</p>
 <script type="math/tex; mode=display">
 \begin{array}{l}
@@ -565,6 +567,35 @@ a_{t+j}^{t-i}=\operatorname{softmax}\left(u_{t+j}^{t-i}\right)=\frac{\exp \left(
 </ul>
 </li>
 </ol>
+<h1 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h1><h3 id="Dataset"><a href="#Dataset" class="headerlink" title="Dataset"></a>Dataset</h3><p>选择2018年搜狐统计的北京二环路段的交通数据进行实验验证。二环路全长33公里，我们将其分为163段，每段长200米。此外，计算每个路段的5分钟平均速度。训练和测试集分配如下：</p>
+<p><img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/25/Multistep-Speed-Prediction-on-Traffic-Networks/Snipaste_2020-07-25_17-07-08.png?raw=true" alt="Snipaste_2020-07-25_17-07-08" style="zoom:67%;"></p>
+<h3 id="Evaluation-statistics"><a href="#Evaluation-statistics" class="headerlink" title="Evaluation statistics"></a>Evaluation statistics</h3><p>我们通过三个经典的误差指标来评估模型:</p>
+<ol>
+<li>平均绝对百分比误差(MAPE)；</li>
+<li>平均绝对误差(MAE)；</li>
+<li>均方根误差(RMSE)；</li>
+</ol>
+<h3 id="Results"><a href="#Results" class="headerlink" title="Results"></a>Results</h3><ol>
+<li><p>AGC-Seq2Seq模型在所有预测区间内的所有指标都优于其他基准。</p>
+</li>
+<li><p>HA模型的表现不会随预测范围的增加而改变，因为它只依赖于历史数据。</p>
+</li>
+<li><p>由于交通状态在5分钟内相对稳定，所以在5分钟预测范围内所有模型的性能相似。</p>
+</li>
+<li><p>与传统的机器学习模型相比，深度学习方法具有更好的预测性能，但计算时间更长。</p>
+</li>
+<li><p>GCN(根据空间相关性建模)优于LSTM(捕捉时间特征)，证明了考虑空间相关性在交通速度预测中很重要。</p>
+</li>
+<li><p>AGC-Seq2Seq模型相比GCN和Seq2Seq-Att有明显的改进；这强调了同时捕获时空特征对交通速度预测的重要性。但AGC-Seq2Seq模型的运行时间仅略高于GCN和 Seq2Seq-Att，这主要得益于GPU模块中先进的并行计算技术。</p>
+<p><img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/25/Multistep-Speed-Prediction-on-Traffic-Networks/Snipaste_2020-07-25_17-13-50.png?raw=true" alt="Snipaste_2020-07-25_17-13-50" style="zoom:67%;"></p>
+<p><img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/25/Multistep-Speed-Prediction-on-Traffic-Networks/Snipaste_2020-07-25_17-14-04.png?raw=true" alt="Snipaste_2020-07-25_17-14-04" style="zoom:67%;"></p>
+<p><img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/25/Multistep-Speed-Prediction-on-Traffic-Networks/Snipaste_2020-07-25_17-14-18.png?raw=true" alt="Snipaste_2020-07-25_17-14-18" style="zoom:67%;"></p>
+<p><img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/25/Multistep-Speed-Prediction-on-Traffic-Networks/Snipaste_2020-07-25_17-14-32.png?raw=true" alt="Snipaste_2020-07-25_17-14-32" style="zoom:67%;"></p>
+<p><img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/25/Multistep-Speed-Prediction-on-Traffic-Networks/Snipaste_2020-07-25_17-15-06.png?raw=true" alt="Snipaste_2020-07-25_17-15-06" style="zoom:67%;"></p>
+</li>
+</ol>
+<h1 id="Conclusions"><a href="#Conclusions" class="headerlink" title="Conclusions"></a>Conclusions</h1><p>为了解决多步交通速度预测的挑战，本文致力于提出一种复杂的深度学习方法，即AGC-Seq2Seq模型。该模型结合Seq2Seq架构和图形卷积操作来学习交通网络的时空相关性。并且将注意力机制集成到模型中以捕捉交通模式的时间异质性，采用新设计的方法对整个模型结构进行训练。为了验证提出的模型的有效性，我们将其与几个基准测试模型进行比较，包括HA、ARIMA、XGBOOST、ANN, LSTM, SVR, KNN, GCN, Seq2Seq-Att。结果表明，该模型在不同预测区间下的RMSE、MAE和MAPE指标均优于基准模型。在此基础上，进一步探讨了特征的重要性、空间信息对多步预测的影响以及交通时间模式与注意系数的相关性。实验结果表明，随着预测区间的增大，过去一小时的速度特征的相对重要性和空间信息增加的效应逐渐减弱；对于交通状况变化较快的路段，过去15分钟内的回望观测值对应的注意系数值较高。</p>
+<p>未来的研究可以包括对大型城市道路网络的实验，以及将交通流理论进一步整合到预测模型中，例如在更复杂的模型中利用交通流的传播波来确定空间邻居。从应用的角度来看，该框架可以与先进的交通管理系统集成，例如，提供系统级的实时路由服务，以减少高峰时段拥堵。</p>
 ]]></content>
       <categories>
         <category>paper</category>
