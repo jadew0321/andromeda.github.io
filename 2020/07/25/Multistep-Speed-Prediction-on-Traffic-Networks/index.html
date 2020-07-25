@@ -80,52 +80,124 @@
 <li>探究了不同预测步长和路段下交通情况时间和空间变化的相关性。</li>
 </ol>
 <h1 id="Method"><a href="#Method" class="headerlink" title="Method"></a>Method</h1><h3 id="Preliminaries"><a href="#Preliminaries" class="headerlink" title="Preliminaries"></a>Preliminaries</h3><ol>
-<li><p>Road Network Topology</p>
-<p>交通网数据可以用一个关于行驶方向的图$\mathcal{G}\left(\mathcal{N},\mathcal{L}\right)$来表示，其中$\mathcal{N}$表示路口，边$\mathcal{L}$表示路段。$\boldsymbol{A}$是路段的邻接矩阵，$\boldsymbol{A}\left(i,j\right)$表示路段$i$ 和路段$j$ 的相互连接关系，（值为1表示按行驶方向连接，为0则表示不连接）。网络拓扑结构如下图所示：</p>
+<li><h5 id="Road-Network-Topology"><a href="#Road-Network-Topology" class="headerlink" title="Road Network Topology"></a>Road Network Topology</h5><p>交通网数据可以用一个关于行驶方向的图$\mathcal{G}\left(\mathcal{N},\mathcal{L}\right)$来表示，其中$\mathcal{N}$表示路口，边$\mathcal{L}$表示路段。$\boldsymbol{A}$是路段的邻接矩阵，$\boldsymbol{A}\left(i,j\right)$表示路段$i$ 和路段$j$ 的相互连接关系，（值为1表示按行驶方向连接，为0则表示不连接）。网络拓扑结构如下图所示：</p>
+<p><img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/25/Multistep-Speed-Prediction-on-Traffic-Networks/Snipaste_2020-07-25_13-44-53.png?raw=true" alt="Snipaste_2020-07-25_13-44-53" style="zoom: 80%;"></p>
 </li>
-</ol>
-<ol>
-<li><p>Traffic Speed</p>
-<p>交通速度信息：在路段$l_i \left( \forall l_i\in\mathcal{L}\right)$ ，时间段 $t^{th}$的交通速度定义为该路段该时间间隔内浮动车辆的平均速度，记为 $v^i_t$。在时间段 $t^{th}$的交通速度定义为向量 $\boldsymbol{V}_t\in\mathfrak{R^{\left|\mathcal{L}\right|}}$，并且 $\left(\boldsymbol{V}_t\right)_i=v^i_t$。</p>
+<li><h5 id="Traffic-Speed"><a href="#Traffic-Speed" class="headerlink" title="Traffic Speed"></a>Traffic Speed</h5><p>交通速度信息：在路段$l_i \left( \forall l_i\in\mathcal{L}\right)$ ，时间段 $t^{th}$的交通速度定义为该路段该时间间隔内浮动车辆的平均速度，记为 $v^i_t$。在时间段 $t^{th}$的交通速度定义为向量 $\boldsymbol{V}_t\in\mathfrak{R^{\left|\mathcal{L}\right|}}$，并且 $\left(\boldsymbol{V}_t\right)_i=v^i_t$。</p>
 </li>
-<li><p>Time-of-Day and Weekday-or-Weekend</p>
-<p>由于将每个路段的速度汇总为5min内的平均值，因此将时间也转换为有序整数$N$，例如00：00-00：05，记为 $N_t=1$，7：00-7：05记为 $N_t =85\left(7\times 12+1\right)$ 。工作日或周末的信息用一个虚拟变量 $p_t$ 来区分。</p>
+<li><h5 id="Time-of-Day-and-Weekday-or-Weekend"><a href="#Time-of-Day-and-Weekday-or-Weekend" class="headerlink" title="Time-of-Day and Weekday-or-Weekend"></a>Time-of-Day and Weekday-or-Weekend</h5><p>由于将每个路段的速度汇总为5min内的平均值，因此将时间也转换为有序整数$N$，例如00：00-00：05，记为 $N_t=1$，7：00-7：05记为 $N_t =85\left(7\times 12+1\right)$ 。工作日或周末的信息用一个虚拟变量 $p_t$ 来区分。</p>
 </li>
-<li><p>Historical Statistic Information</p>
-<p>通过将历史统计信息引入预测模型，可以获取交通状态的日变化趋势。历史平均速度、平均速度、最大速度、最小速度、和标准偏差在时间段$t^{th}$道路段$l_i$被定义为训练集中的平均值，中位数，最大值，最小值和标准偏差。分别记为：$v^i_{t,average}$，$v^i_{t,median}$，$v^i_{t,max}$，$v^i_t,min$ 和 $d^i_t$。</p>
+<li><h5 id="Historical-Statistic-Information"><a href="#Historical-Statistic-Information" class="headerlink" title="Historical Statistic Information"></a>Historical Statistic Information</h5><p>通过将历史统计信息引入预测模型，可以获取交通状态的日变化趋势。历史平均速度、平均速度、最大速度、最小速度、和标准偏差在时间段$t^{th}$道路段$l_i$被定义为训练集中的平均值，中位数，最大值，最小值和标准偏差。分别记为：$v^i_{t,average}$，$v^i_{t,median}$，$v^i_{t,max}$，$v^i_t,min$ 和 $d^i_t$。</p>
 </li>
-<li><p>Problem Formulation</p>
-<p>交通速度预测的任务是利用以前观测到的速度记录来预测某一时间段内各路段的未来值。多步交通速度问题可以表示为：</p>
+<li><h5 id="Problem-Formulation"><a href="#Problem-Formulation" class="headerlink" title="Problem Formulation"></a>Problem Formulation</h5><p>交通速度预测的任务是利用以前观测到的速度记录来预测某一时间段内各路段的未来值。多步交通速度问题可以表示为：</p>
 <script type="math/tex; mode=display">
 \hat{\boldsymbol{V}}_{t+n}=argmax \Pr \left(\boldsymbol{V}_{t+n}|\boldsymbol{V}_t,\boldsymbol{V}_{t-1},...,\boldsymbol{V}_{t-m};\mathcal{G}\right)</script><p>其中 $\hat{\boldsymbol{V}}_{t+n}$  表示第$n$步的预测值，$\left\{\boldsymbol{V}_t,\boldsymbol{V}_{t-1},…,\boldsymbol{V}_{t-m}|m=1,2,…\right\}$  表示相关的先前观测值向量，$\Pr\left(\cdot|\cdot\right)$  是条件概率函数。</p>
 </li>
 </ol>
 <h3 id="Graph-Convolution-on-Traffic-Networks"><a href="#Graph-Convolution-on-Traffic-Networks" class="headerlink" title="Graph Convolution on Traffic Networks"></a>Graph Convolution on Traffic Networks</h3><ol>
-<li><p>定义每个路段 $l_i \in  \mathcal{L}$ 的邻阶接节点</p>
-<p> $\mathcal{H_i}\left(K\right)=\left\{l_j \in\mathcal{L}|d\left(l_i,l_j\right)\leq{K}\right\}$，其中$d\left(l_i,l_j\right)$表示从$l_i$走到$l_j$需要的最小边的数量。</p>
+<li><h5 id="定义每个路段-l-i-in-mathcal-L-的邻阶接节点"><a href="#定义每个路段-l-i-in-mathcal-L-的邻阶接节点" class="headerlink" title="定义每个路段 $l_i \in  \mathcal{L}$ 的邻阶接节点"></a>定义每个路段 $l_i \in  \mathcal{L}$ 的邻阶接节点</h5><p> $\mathcal{H_i}\left(K\right)=\left\{l_j \in\mathcal{L}|d\left(l_i,l_j\right)\leq{K}\right\}$，其中$d\left(l_i,l_j\right)$表示从$l_i$走到$l_j$需要的最小边的数量。</p>
 </li>
-<li><p>定义$K$阶邻接矩阵</p>
-<p>典型邻接矩阵即1-hop邻接矩阵 $\boldsymbol{A}$，$K$阶邻接矩阵可以通过计算1-hop邻接矩阵 $\boldsymbol{A}$的$K$次幂得到，并且为了模拟拉普拉斯矩阵，使对角线元素为1，同时使拓扑图中的卷积具有自可访问性。计算公式如下：</p>
+<li><h5 id="定义-K-阶邻接矩阵"><a href="#定义-K-阶邻接矩阵" class="headerlink" title="定义$K$阶邻接矩阵"></a>定义$K$阶邻接矩阵</h5><p>典型邻接矩阵即1-hop邻接矩阵 $\boldsymbol{A}$，$K$阶邻接矩阵可以通过计算1-hop邻接矩阵 $\boldsymbol{A}$的$K$次幂得到，并且为了模拟拉普拉斯矩阵，使对角线元素为1，同时使拓扑图中的卷积具有自可访问性。计算公式如下：</p>
 <script type="math/tex; mode=display">
 \boldsymbol{A}^K_{GC}=Ci\left(\boldsymbol{A}^K+\boldsymbol{I}\right)</script><p>其中，$Ci\left(\cdot\right)$使得矩阵中每个不为零的元素值为1，因此如果$l_j$属于$l_i$的$K$阶邻接节点，$l_j \in \mathcal{H}_i\left(K\right)$，或者$i=j$，则$\boldsymbol{A}^K_{GC}\left(i,j\right)=1$，否则，$\boldsymbol{A}^K_{GC}\left(i,j\right)=0$ 。</p>
 </li>
-<li><p>定义图卷积运算</p>
-<script type="math/tex; mode=display">
+<li><h5 id="定义图卷积运算"><a href="#定义图卷积运算" class="headerlink" title="定义图卷积运算"></a>定义图卷积运算</h5><script type="math/tex; mode=display">
 \boldsymbol{V}_t\left(K\right)=\left(\boldsymbol{W}_{GC}\bigodot\boldsymbol{A}^K_{GC}\right)\cdot\boldsymbol{V}_t</script><p>其中，$\boldsymbol{W}_{GC}$是一个可训练的矩阵，与$\boldsymbol{A}$的大小相同。$\bigodot$表示Hadamard 乘积，实现矩阵对应元素相乘操作。</p>
 <p>通过该乘积，会产生一个新的矩阵在$K$阶邻接位置上的可训练参数，而参数在非领域位置上的值为0。</p>
 </li>
-<li><p>空域离散卷积</p>
-<p>根据上式可以发现，K阶邻接节点对应的训练参数不为0，而其余不相邻节点的训练参数为0，因此对时刻所有路段的交通速度向量$\boldsymbol{V}_t$的空域离散卷积可以通过下式实现：</p>
+<li><h5 id="空域离散卷积"><a href="#空域离散卷积" class="headerlink" title="空域离散卷积"></a>空域离散卷积</h5><p>根据上式可以发现，K阶邻接节点对应的训练参数不为0，而其余不相邻节点的训练参数为0，因此对时刻所有路段的交通速度向量$\boldsymbol{V}_t$的空域离散卷积可以通过下式实现：</p>
 <script type="math/tex; mode=display">
 \left(\boldsymbol{W}_{GC}\bigodot\boldsymbol{A}^K_{GC}\right)\cdot\boldsymbol{V}_t</script><p>因此，$\boldsymbol{V}_t\left(K\right)$称为$t$时刻的空间聚合速度向量，其中的第$i$个元素表示路段$l_i \in \mathcal{L}$在$t$时刻的空间聚合速度，它聚合了来自$K$阶邻接路段的相关信息。</p>
 <p>上面的矩阵运算也可以通过下式一维运算来实现：</p>
 <script type="math/tex; mode=display">
 v^i_t\left(K\right)=\left(\boldsymbol{W}_{GC}\left[i\right]\bigodot\boldsymbol{A}^K_{GC}\left[i\right]\right)^T\cdot\boldsymbol{V}_t</script><p>$\boldsymbol{W}_{GC}\left[i\right]$和$\boldsymbol{A}^K_{GC}\left[i\right]$是 $\boldsymbol{W}_{GC}$和$\boldsymbol{A}^K_{GC}$中的第$i$行。</p>
-<p>对$\boldsymbol{A}^K_{GC}\left[i\right]$的理解可参照下图所示例子：（个人觉得图（b）左图，$l_{16}=1$，不知道是不是作者漏了）</p>
+<p>对$\boldsymbol{A}^K_{GC}\left[i\right]$的理解可参照下图所示例子，其中红线表示当前路段，蓝色表示邻接路段：</p>
+<p>（个人觉得图（b）左图，$l_{16}=1$，不知道是不是作者漏了）</p>
+<p><img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/25/Multistep-Speed-Prediction-on-Traffic-Networks/Snipaste_2020-07-25_15-33-10.png?raw=true" alt="Snipaste_2020-07-25_15-33-10" style="zoom: 50%;"></p>
+<p><img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/25/Multistep-Speed-Prediction-on-Traffic-Networks/Snipaste_2020-07-25_15-37-46.png?raw=true" alt="Snipaste_2020-07-25_15-37-46" style="zoom: 50%;"></p>
 </li>
-</ol>
-<ol>
-<li>第三方</li>
+<li><h5 id="AGC-Seq2Seq-Model"><a href="#AGC-Seq2Seq-Model" class="headerlink" title="AGC-Seq2Seq Model"></a>AGC-Seq2Seq Model</h5><p>为了捕捉时间序列特征并获得多步预测输出，我们采用Seq2Seq模型作为整个方法的基本结构。Seq2Seq模型由两个参数独立、相互连接的RNN模块组成。为了克服RNN输出时间戳固定的问题，Seq2Seq模型对编码器部分的时间序列输入进行编码以使其满足时间依赖，解码器根据 context vector 组织以时间步长排列顺序的目标输出。模型结构如下图所示：</p>
+<ul>
+<li><p>首先，使用图卷积操作来捕获各路段空间上的特性，生成spatial-temporal variable $v^i_{t-j}\left(K\right)$。</p>
+</li>
+<li><p>其次，与包含一天中的时段信息$N_t$，以及weekday-or-weekend信息$p_t$ 的 exogenous variable ，$\boldsymbol{E}_{t-j}$进行拼接，来构造一个输入向量，该输入向量后续将喂给Seq2Seq模型的编码器部分。</p>
+<p>上述两步操作可通过如下公式实现：</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}
+v_{t-j}^{i}(K)=\left(\boldsymbol{W}_{G C}[i] \odot \boldsymbol{A}_{G C}^{K}[i]\right)^{T} \cdot \boldsymbol{V}_{t-j}, \quad 0 \leq j \leq m \\
+\boldsymbol{E}_{t-j}=\left[N_{t-j} ; p_{t-j}\right] \\
+\boldsymbol{X}_{t-j}^{i}=\left[v_{t-j}^{i}(K) ; \boldsymbol{E}_{t-j}\right]
+\end{array}</script><p>其中，$\left[\cdot;\cdot\right]$表示将两个tensor在相同维度上进行拼接。</p>
+</li>
+<li><p>接着，在编码器部分，在$t-j,j\in \left\{ 0,…,m\right\} $时刻，前一个时刻的隐藏状态$\boldsymbol{h}_{t-j-1}$传递到了当前时刻，与当前时刻的输入$\boldsymbol{X}_{t-j}$一起计算当前时刻的隐藏状态$\boldsymbol{h}_{t-j}$。如图所示，context vector $\boldsymbol{C}$ 聚合了编码器中所有的信息，包括隐藏状态$\left(\boldsymbol{h}_{t-m}, \boldsymbol{h}_{t-m+1}, \cdots, \boldsymbol{h}_{t-1}\right)$，和输入$\left(\boldsymbol{X}_{t-m}, \boldsymbol{X}_{t-m+1}, \cdots, \boldsymbol{X}_{t}\right)$，作为编码器和解码器的连接者。</p>
+<script type="math/tex; mode=display">
+\begin{array}{ll}
+\boldsymbol{h}_{t-j}=\left\{\begin{array}{c}
+\text { Cell }_{\text {encoder }}\left(\boldsymbol{h}_{0}, \boldsymbol{X}_{t-j}\right), \\
+\text { Cell }_{\text {encoder }}\left(\boldsymbol{h}_{t-j-1}, \boldsymbol{X}_{t-j}\right),
+\end{array}\right. & \begin{array}{l}
+j=m \\
+j \in\{0, \cdots, m-1\}
+\end{array} \\
+\boldsymbol{C}=\boldsymbol{h}_{t}
+\end{array}</script><p>其中$\boldsymbol{h}_0$是初始隐藏状态，设置为零向量。$\text{Cell}_\text{encoder}(\cdot)$是由所采用的RNN结构决定的编码器的计算函数。</p>
+</li>
+<li><p>然后，在解码器部分，核心的想法是利用context vector $\boldsymbol{C}$作为初始隐藏状态，将输出序列一步一步进行解码。因此，在$t+j, j\in\left\{1,…,n\right\}$时刻，隐藏状态$\boldsymbol{h}_{t+j}$不仅包含输入信息，也考虑了之前时刻的输出状态 $\left(\boldsymbol{h}_{t+1},\boldsymbol{h}_{t+2},…,\boldsymbol{h}_{t+j-1}\right)$ 。</p>
+</li>
+<li><p>解码器的输入根据不同的训练方法确定：</p>
+<ul>
+<li><p>Teacher forcing： 是自然语言处理中常用的一种训练策略。在该训练策略中，目标序列被输入到解码器进行训练，在测试阶段，使用之前生成的预测序列作为之后时间戳的输入。</p>
+<p>然而，该方法不适用于时间序列问题，主要是由于解码器输入在训练周期和测试周期之间的分布不一致。</p>
+</li>
+<li><p>Scheduled sampling：计划抽样可用来缓解上述问题，计划抽样随机选择模板序列或之前的预测值，以某个设置好的概率大小喂给模型。</p>
+<p>然而，该方法会增加模型复杂度，加重计算负担。</p>
+</li>
+<li><p>提出方法：为了克服上述问题，文章提出一种新的训练方法，使用历史统计信息和time-of-day作为输入。在时间序列预测问题中，在训练和测试阶段都可以获得历史统计信息；基于这样的事实，解码器输入在训练和测试期间的分布将会同步，从而解决了Teacher forcing的困境。此外，由于历史统计信息在多步预测中至关重要，将其加入到模型中有望提高预测精度。</p>
+</li>
+<li><p>解码器在$t+j$时刻的输出将通过下式计算：</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}
+\boldsymbol{v}_{t+j}^{i}(H)=\left[N_{t+j} ; v_{t+j, \text {average}}^{i} ; v_{t+j, m e d i a n}^{i} ; v_{t+j, m a x}^{i} ; v_{t+j, m i n}^{i}, d_{t+j}^{i}\right] \\
+\boldsymbol{h}_{t+j}=\left\{\begin{aligned}
+\operatorname{Cell}_{\text {decoder }}\left(\boldsymbol{C}, \boldsymbol{v}_{t+j}^{i}(H)\right), j=1 & \\
+\text { Cell }_{\text {decoder }}\left(\boldsymbol{h}_{t+j-1}, \boldsymbol{v}_{t+j}^{i}(H)\right), j \in\{2, \cdots, n\}
+\end{aligned}\right.
+\end{array}</script></li>
+</ul>
+</li>
+<li><p>在实际模型构件中，我们采用门控循环单元(GRU)作为编码器和解码器的内部结构。内部运算结构如下图所示：</p>
+<p>计算公式为：</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}
+z_{t}=\sigma\left(W_{z} \cdot\left[\boldsymbol{h}_{t-1} ; x_{t}\right]+b_{z}\right) \\
+r_{t}=\sigma\left(\boldsymbol{W}_{r} \cdot\left[\boldsymbol{h}_{t-1} ; x_{t}\right]+b_{r}\right) \\
+c_{t}=\tanh \left(\boldsymbol{W}_{c} \cdot\left[r_{t} \odot \boldsymbol{h}_{t-1} ; x_{t}\right]+b_{c}\right) \\
+\boldsymbol{h}_{t}=\left(1-z_{t}\right) \odot \boldsymbol{h}_{t-1}+z_{t} \odot \boldsymbol{c}_{t} \\
+\sigma(x)=\frac{1}{1+e^{-x}} \\
+\tanh (x)=\frac{e^{x}-e^{-x}}{e^{x}+e^{-x}}
+\end{array}</script></li>
+<li><p>加入注意力机制以捕捉交通模态中的时序异质性：关键是为每一个时间步增加一个注意力向量，用于捕捉源侧信息的相关性，以帮助预测交通速度。</p>
+<p>在$t+j$时刻，注意力函数计算$\boldsymbol{h}_{t+j}$和一系列隐藏状态$\left(\boldsymbol{h}_{t-m}, \boldsymbol{h}_{t-m+1}, \cdots, \boldsymbol{h}_{t}\right)$之前的相似度，得到一个注意力向量$\boldsymbol{S}_{t+j}$。该注意力向量是这一系列隐藏状态的加权线性组合。加权系数及注意力向量的计算公式如下：</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}
+u_{t+j}^{t-i}=\boldsymbol{q}^{T} \tanh \left(\boldsymbol{h}_{t+j} \boldsymbol{W}_{f} \boldsymbol{h}_{t-i}\right), i=0,1, \cdots, m \\
+a_{t+j}^{t-i}=\operatorname{softmax}\left(u_{t+j}^{t-i}\right)=\frac{\exp \left(u_{t+j}^{t-i}\right)}{\sum_{r=1}^{m} \exp \left(u_{t+j}^{t-r}\right)}, i=0,1, \cdots, m \\
+\boldsymbol{S}_{t+j}=\sum_{i=1}^{m} a_{t+j}^{t-i} \boldsymbol{h}_{t-i}
+\end{array}</script><p>其中，$u_{t+j}^{t-i}$用于衡量两个隐藏状态之间的相似性，$\boldsymbol{q}^{T}$和$\boldsymbol{W}_{f}$是可训练的权重矩阵和向量。$a_{t+j}^{t-i}$ 是 $u_{t+j}^{t-i}$ 归一化后的值，进一步作为权重系数。</p>
+<p>最终根据注意力向量$\boldsymbol{S}_{t+j}$和原始的当前隐藏状态$\boldsymbol{h}_{t+j}$，得到一个注意隐藏状态，$\boldsymbol{\tilde{h}}_{t+j}$，计算公式如下：</p>
+<script type="math/tex; mode=display">
+\widetilde{\boldsymbol{h}}_{t+j}=\tanh \left(\boldsymbol{W}_{h} \cdot\left[\boldsymbol{S}_{t+k} ; \boldsymbol{h}_{t+j}\right]\right)</script></li>
+<li><p>预测输出</p>
+<p>最后将注意隐藏状态进行线性变换后作为预测输出：</p>
+<script type="math/tex; mode=display">
+\hat{v}_{t+j}=\boldsymbol{W}_{v} \widetilde{\boldsymbol{h}}_{t+j}+b_{v}</script></li>
+<li><p>LOSS</p>
+<p>为了同时降低多步预测中的预测误差，我们将损失定义为$\left(\hat{v}_{t+1}, \hat{v}_{t+2}, \cdots, \hat{v}_{t+n}\right)$和$\left(v_{t+1}, v_{t+2}, \cdots, v_{t+n}\right)$之间的平均绝对误差：</p>
+<script type="math/tex; mode=display">
+\operatorname{loss} =\frac{1}{n} \sum_{j=1}^{n}\left|\hat{v}_{t+j}^{i}-v_{t+j}^{i}\right|</script><p>在训练阶段通过小批量梯度下降算法最小化损失函数来更新所有参数。</p>
+</li>
+</ul>
+</li>
 </ol>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
