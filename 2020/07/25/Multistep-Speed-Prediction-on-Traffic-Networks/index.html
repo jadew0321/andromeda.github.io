@@ -1,0 +1,258 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Multistep Speed Prediction on Traffic Networks-A Graph Convolutional Sequence-to-Sequence Learning Approach with Attention Mechanism - Jade</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="Less is More,Abstract本文为了捕获多步交通状况预测中复杂的非平稳时间动态和空间依赖性，提出了一种新的深度学习框架——attention graph convolutional sequence-to-se,"> 
+    <meta name="author" content="Jade W"> 
+    <link rel="alternative" href="atom.xml" title="Jade" type="application/atom+xml"> 
+    <link rel="icon" href="/andromeda.github.io/img/favicon.png"> 
+    
+    
+<link rel="stylesheet" href="/andromeda.github.io/css/diaspora.css">
+
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Jade</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://jadew0321.github.io/andromeda.github.io"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">Multistep Speed Prediction on Traffic Networks-A Graph Convolutional Sequence-to-Sequence Learning Approach with Attention Mechanism</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">Multistep Speed Prediction on Traffic Networks-A Graph Convolutional Sequence-to-Sequence Learning Approach with Attention Mechanism</h1>
+        <div class="stuff">
+            <span>七月 25, 2020</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/andromeda.github.io/tags/GNN/" rel="tag">GNN</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h1 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h1><p>本文为了捕获多步交通状况预测中复杂的非平稳时间动态和空间依赖性，提出了一种新的深度学习框架——attention graph convolutional sequence-to-sequence model (AGC-Seq2Seq)。在AGC-Seq2Seq中，空间和时间的依赖关系分别通过Seq2Seq模型和图卷积网络进行建模。提出了基于Seq2Seq架构的注意力机制以及新的训练方法，从而克服交通流多步预测的困难，进而能捕捉到交通模式的时间异质性（temporal heterogeneity）。</p>
+<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><h3 id="Backgroud"><a href="#Backgroud" class="headerlink" title="Backgroud"></a>Backgroud</h3><p>技术和经济的稳定发展，使得汽车的使用在过去的几十年里有了显著的增长。然而，汽车使用的增加导致了交通拥堵、交通事故、能源过度消耗、碳排放等一系列社会问题。智能交通系统(The intelligent transportation system，ITS)被认为是一个改善交通管理和服务的有效解决方案。高精度的基于交通预测的应用不仅有利于出行者的路线规划和出发时间安排，而且能为交通控制提供有价值的信息，从而提高交通效率和安全。未来的一些研究重点有：</p>
+<ol>
+<li>对交通网络的流量预测应该得到更多的重视；</li>
+<li>采用多步法进行中长期预测更适合实际应用；</li>
+<li>可结合交通流时间特性和空间特性进行研究。</li>
+</ol>
+<h3 id="Challenges"><a href="#Challenges" class="headerlink" title="Challenges"></a>Challenges</h3><ol>
+<li>非平稳时变交通模式的的随机性和不确定性；</li>
+<li>非欧几里得拓扑结构的数据；</li>
+<li>多步预测固有的困难。</li>
+</ol>
+<h3 id="Contributions"><a href="#Contributions" class="headerlink" title="Contributions"></a>Contributions</h3><ol>
+<li>同时提取时域和空域的特征，引入了注意机制以克服多步预测的挑战及捕捉城市交通模式的时间异质性；</li>
+<li>设计了一种针对多步交通预测的Seq2Seq模型的训练方法，主要通过在端到端的深度学习框架中协调多维特征和时空速度变量的方法，使得测试期间的输入与训练期间一致；</li>
+<li>探究了不同预测步长和路段下交通情况时间和空间变化的相关性。</li>
+</ol>
+<h1 id="Method"><a href="#Method" class="headerlink" title="Method"></a>Method</h1><h3 id="Preliminaries"><a href="#Preliminaries" class="headerlink" title="Preliminaries"></a>Preliminaries</h3><ol>
+<li><p>Road Network Topology</p>
+<p>交通网数据可以用一个关于行驶方向的图$\mathcal{G}\left(\mathcal{N},\mathcal{L}\right)$来表示，其中$\mathcal{N}$表示路口，边$\mathcal{L}$表示路段。$\boldsymbol{A}$是路段的邻接矩阵，$\boldsymbol{A}\left(i,j\right)$表示路段$i$ 和路段$j$ 的相互连接关系，（值为1表示按行驶方向连接，为0则表示不连接）。网络拓扑结构如下图所示：</p>
+</li>
+</ol>
+<ol>
+<li><p>Traffic Speed</p>
+<p>交通速度信息：在路段$l_i \left( \forall l_i\in\mathcal{L}\right)$ ，时间段 $t^{th}$的交通速度定义为该路段该时间间隔内浮动车辆的平均速度，记为 $v^i_t$。在时间段 $t^{th}$的交通速度定义为向量 $\boldsymbol{V}_t\in\mathfrak{R^{\left|\mathcal{L}\right|}}$，并且 $\left(\boldsymbol{V}_t\right)_i=v^i_t$。</p>
+</li>
+<li><p>Time-of-Day and Weekday-or-Weekend</p>
+<p>由于将每个路段的速度汇总为5min内的平均值，因此将时间也转换为有序整数$N$，例如00：00-00：05，记为 $N_t=1$，7：00-7：05记为 $N_t =85\left(7\times 12+1\right)$ 。工作日或周末的信息用一个虚拟变量 $p_t$ 来区分。</p>
+</li>
+<li><p>Historical Statistic Information</p>
+<p>通过将历史统计信息引入预测模型，可以获取交通状态的日变化趋势。历史平均速度、平均速度、最大速度、最小速度、和标准偏差在时间段$t^{th}$道路段$l_i$被定义为训练集中的平均值，中位数，最大值，最小值和标准偏差。分别记为：$v^i_{t,average}$，$v^i_{t,median}$，$v^i_{t,max}$，$v^i_t,min$ 和 $d^i_t$。</p>
+</li>
+<li><p>Problem Formulation</p>
+<p>交通速度预测的任务是利用以前观测到的速度记录来预测某一时间段内各路段的未来值。多步交通速度问题可以表示为：</p>
+<script type="math/tex; mode=display">
+\hat{\boldsymbol{V}}_{t+n}=argmax \Pr \left(\boldsymbol{V}_{t+n}|\boldsymbol{V}_t,\boldsymbol{V}_{t-1},...,\boldsymbol{V}_{t-m};\mathcal{G}\right)</script><p>其中 $\hat{\boldsymbol{V}}_{t+n}$  表示第$n$步的预测值，$\left\{\boldsymbol{V}_t,\boldsymbol{V}_{t-1},…,\boldsymbol{V}_{t-m}|m=1,2,…\right\}$  表示相关的先前观测值向量，$\Pr\left(\cdot|\cdot\right)$  是条件概率函数。</p>
+</li>
+</ol>
+<h3 id="Graph-Convolution-on-Traffic-Networks"><a href="#Graph-Convolution-on-Traffic-Networks" class="headerlink" title="Graph Convolution on Traffic Networks"></a>Graph Convolution on Traffic Networks</h3><ol>
+<li><p>定义每个路段 $l_i \in  \mathcal{L}$ 的邻阶接节点</p>
+<p> $\mathcal{H_i}\left(K\right)=\left\{l_j \in\mathcal{L}|d\left(l_i,l_j\right)\leq{K}\right\}$，其中$d\left(l_i,l_j\right)$表示从$l_i$走到$l_j$需要的最小边的数量。</p>
+</li>
+<li><p>定义$K$阶邻接矩阵</p>
+<p>典型邻接矩阵即1-hop邻接矩阵 $\boldsymbol{A}$，$K$阶邻接矩阵可以通过计算1-hop邻接矩阵 $\boldsymbol{A}$的$K$次幂得到，并且为了模拟拉普拉斯矩阵，使对角线元素为1，同时使拓扑图中的卷积具有自可访问性。计算公式如下：</p>
+<script type="math/tex; mode=display">
+\boldsymbol{A}^K_{GC}=Ci\left(\boldsymbol{A}^K+\boldsymbol{I}\right)</script><p>其中，$Ci\left(\cdot\right)$使得矩阵中每个不为零的元素值为1，因此如果$l_j$属于$l_i$的$K$阶邻接节点，$l_j \in \mathcal{H}_i\left(K\right)$，或者$i=j$，则$\boldsymbol{A}^K_{GC}\left(i,j\right)=1$，否则，$\boldsymbol{A}^K_{GC}\left(i,j\right)=0$ 。</p>
+</li>
+<li><p>定义图卷积运算</p>
+<script type="math/tex; mode=display">
+\boldsymbol{V}_t\left(K\right)=\left(\boldsymbol{W}_{GC}\bigodot\boldsymbol{A}^K_{GC}\right)\cdot\boldsymbol{V}_t</script><p>其中，$\boldsymbol{W}_{GC}$是一个可训练的矩阵，与$\boldsymbol{A}$的大小相同。$\bigodot$表示Hadamard 乘积，实现矩阵对应元素相乘操作。</p>
+<p>通过该乘积，会产生一个新的矩阵在$K$阶邻接位置上的可训练参数，而参数在非领域位置上的值为0。</p>
+</li>
+<li><p>空域离散卷积</p>
+<p>根据上式可以发现，K阶邻接节点对应的训练参数不为0，而其余不相邻节点的训练参数为0，因此对时刻所有路段的交通速度向量$\boldsymbol{V}_t$的空域离散卷积可以通过下式实现：</p>
+<script type="math/tex; mode=display">
+\left(\boldsymbol{W}_{GC}\bigodot\boldsymbol{A}^K_{GC}\right)\cdot\boldsymbol{V}_t</script><p>因此，$\boldsymbol{V}_t\left(K\right)$称为$t$时刻的空间聚合速度向量，其中的第$i$个元素表示路段$l_i \in \mathcal{L}$在$t$时刻的空间聚合速度，它聚合了来自$K$阶邻接路段的相关信息。</p>
+<p>上面的矩阵运算也可以通过下式一维运算来实现：</p>
+<script type="math/tex; mode=display">
+v^i_t\left(K\right)=\left(\boldsymbol{W}_{GC}\left[i\right]\bigodot\boldsymbol{A}^K_{GC}\left[i\right]\right)^T\cdot\boldsymbol{V}_t</script><p>$\boldsymbol{W}_{GC}\left[i\right]$和$\boldsymbol{A}^K_{GC}\left[i\right]$是 $\boldsymbol{W}_{GC}$和$\boldsymbol{A}^K_{GC}$中的第$i$行。</p>
+<p>对$\boldsymbol{A}^K_{GC}\left[i\right]$的理解可参照下图所示例子：（个人觉得图（b）左图，$l_{16}=1$，不知道是不是作者漏了）</p>
+</li>
+</ol>
+<ol>
+<li>第三方</li>
+</ol>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='http://link.hhtjim.com/163/425570952.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='http://link.hhtjim.com/163/425570952.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+		data-enable='false'
+        data-ae='false'
+        data-ci=''
+        data-cs=''
+        data-r=''
+        data-o=''
+        data-a=''
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/andromeda.github.io/js/plugin.js"></script>
+<script src="/andromeda.github.io/js/typed.js"></script>
+<script src="/andromeda.github.io/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/andromeda.github.io/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/andromeda.github.io/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/andromeda.github.io/photoswipe/photoswipe.min.js"></script>
+<script src="/andromeda.github.io/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+</html>
