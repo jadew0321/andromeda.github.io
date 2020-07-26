@@ -5,12 +5,12 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Archive: 2020/7</title>
+    <title>Dynamic Graph Representation Learning via Self-Attention Networks - Jade</title>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="Fechin,"> 
-    <meta name="description" content="Less is More,"> 
+    <meta name="description" content="Less is More,Abstract以前的图表示学习方法主要关注静态图，即图结构固定不变的情形。然而，许多真实世界的图是动态的，并且会随着时间的推移而变化。在本文中提出了动态自注意网络(DySAT)，用于处理动态图来学,"> 
     <meta name="author" content="Jade W"> 
     <link rel="alternative" href="atom.xml" title="Jade" type="application/atom+xml"> 
     <link rel="icon" href="/andromeda.github.io/img/favicon.png"> 
@@ -33,63 +33,75 @@
 <body class="loading">
     <span id="config-title" style="display:none">Jade</span>
     <div id="loader"></div>
-    <div id="single" class="page">
-    <div id="top">
-        <a class="iconfont icon-left image-icon" href="javascript:history.back()"></a>
-    </div>
-    <div class="section">
-        <div class="article">
-            <div class="main">
-                <div class="content">
-                    <div class="timeline">
-                      <h2 class="timeline-title">归档: 6篇</h2><hr>
-                      
-                      
-                        
-                          <h3 class="timeline-subtitle">2020</h3>
-                        
-                        <div class="timeline-item">
-                          <time>2020-07-26</time>
-                          <a target="_self" href="/andromeda.github.io/2020/07/26/Dynamic-Graph-Representation-Learning-via-Self-Attention-Networks/">Dynamic Graph Representation Learning via Self-Attention Networks</a>
-                        </div>
-                      
-                        
-                        <div class="timeline-item">
-                          <time>2020-07-25</time>
-                          <a target="_self" href="/andromeda.github.io/2020/07/25/Multistep-Speed-Prediction-on-Traffic-Networks/">Multistep Speed Prediction on Traffic Networks-A Graph Convolutional Sequence-to-Sequence Learning Approach with Attention Mechanism</a>
-                        </div>
-                      
-                        
-                        <div class="timeline-item">
-                          <time>2020-07-22</time>
-                          <a target="_self" href="/andromeda.github.io/2020/07/22/Graph%20Attention%20Networks/">Graph Attention Networks</a>
-                        </div>
-                      
-                        
-                        <div class="timeline-item">
-                          <time>2020-07-22</time>
-                          <a target="_self" href="/andromeda.github.io/2020/07/22/Graph-Attention-Networks/">Graph Attention Networks</a>
-                        </div>
-                      
-                        
-                        <div class="timeline-item">
-                          <time>2020-07-10</time>
-                          <a target="_self" href="/andromeda.github.io/2020/07/10/How-to-create-your-personal-homepage/">How to create your personal homepage</a>
-                        </div>
-                      
-                        
-                        <div class="timeline-item">
-                          <time>2020-07-09</time>
-                          <a target="_self" href="/andromeda.github.io/2020/07/09/Handling-Variable-Dimensional-Time-Series-with-Graph-Neural-Networks/">Handling Variable-Dimensional Time Series with Graph Neural Networks</a>
-                        </div>
-                      
-                    </div>
-                </div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://jadew0321.github.io/andromeda.github.io"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">Dynamic Graph Representation Learning via Self-Attention Networks</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
             </div>
+            <div id="qr"></div>
         </div>
     </div>
+    <div class="scrollbar"></div>
 </div>
 
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">Dynamic Graph Representation Learning via Self-Attention Networks</h1>
+        <div class="stuff">
+            <span>七月 26, 2020</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/andromeda.github.io/tags/paper/" rel="tag">paper</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h1 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h1><p>以前的图表示学习方法主要关注静态图，即图结构固定不变的情形。然而，许多真实世界的图是动态的，并且会随着时间的推移而变化。在本文中提出了动态自注意网络(DySAT)，用于处理动态图来学习节点特征，同时考虑图结构属性和时间演化特性。具体来说，DySAT通过在邻接节点和时间动态特性两个维度上联合使用自注意层来计算节点特征表示。我们对通信网络和双向评级网络进行了边预测实验。实验结果表明，在几种最新的图嵌入基准下，DySAT具有显著的性能提升。</p>
+<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><h1 id="Problem-Definition"><a href="#Problem-Definition" class="headerlink" title="Problem Definition"></a>Problem Definition</h1><h1 id="Dynamic-Self-Attention-Network"><a href="#Dynamic-Self-Attention-Network" class="headerlink" title="Dynamic Self-Attention Network"></a>Dynamic Self-Attention Network</h1><h1 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h1>
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='http://link.hhtjim.com/163/425570952.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='http://link.hhtjim.com/163/425570952.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+		data-enable='false'
+        data-ae='false'
+        data-ci=''
+        data-cs=''
+        data-r=''
+        data-o=''
+        data-a=''
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
 </body>
 
 
