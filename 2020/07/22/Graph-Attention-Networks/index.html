@@ -171,7 +171,7 @@ e_{i j}=a\left(\mathbf{W} \vec{h}_{i}, \mathbf{W} \vec{h}_{j}\right)</script><p>
 <blockquote>
 <p>文章还提出了一个利用稀疏矩阵操作版本的GAT层，降低存储复杂度，并允许在更大的图数据集上执行GAT模型。但由于使用的是rank-2  tensors，它限制了GAT的批处理能力，尤其是对具有多个不同图结构的数据集来说。这也是未来的一项研究工作。  </p>
 </blockquote>
-<h1 id="Evaluation"><a href="#Evaluation" class="headerlink" title="Evaluation"></a>Evaluation</h1><h3 id="Dataset"><a href="#Dataset" class="headerlink" title="Dataset"></a>Dataset</h3><p><img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/22/Graph%20Attention%20Networks/Snipaste_2020-07-24_15-23-08.png?raw=true" alt="Snipaste_2020-07-24_15-23-08"></p>
+<h1 id="Evaluation"><a href="#Evaluation" class="headerlink" title="Evaluation"></a>Evaluation</h1><h3 id="Dataset"><a href="#Dataset" class="headerlink" title="Dataset"></a>Dataset</h3><p><img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/22/Graph-Attention-Networks/Snipaste_2020-07-24_15-23-08.png?raw=true" alt="Snipaste_2020-07-24_15-23-08"></p>
 <ul>
 <li><p>Transductive Learning：</p>
 <p>Cora、Citeseer、Pubmed是三个无向固定图结构的数据集，适用于Transductive Learning。每个节点都有一个类别标签，节点特征是词向量表示。每一类用20个节点进行训练，500个节点进行验证，1000个节点进行测试。</p>
@@ -201,14 +201,14 @@ e_{i j}=a\left(\mathbf{W} \vec{h}_{i}, \mathbf{W} \vec{h}_{j}\right)</script><p>
 </li>
 </ul>
 <h3 id="Results"><a href="#Results" class="headerlink" title="Results"></a>Results</h3><p>实验结果如下表所示：</p>
-<p>​        <img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/22/Graph%20Attention%20Networks/Snipaste_2020-07-24_16-42-04.png?raw=true" alt="Snipaste_2020-07-24_16-42-04"></p>
-<p>​        <img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/22/Graph%20Attention%20Networks/Snipaste_2020-07-24_16-42-16.png?raw=true" alt="Snipaste_2020-07-24_16-42-16"></p>
+<p>​      <img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/22/Graph-Attention-Networks/Snipaste_2020-07-24_16-42-04.png?raw=true" alt="Snipaste_2020-07-24_16-42-04"></p>
+<p>​        <img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/22/Graph-Attention-Networks/Snipaste_2020-07-24_16-42-16.png?raw=true" alt="Snipaste_2020-07-24_16-42-16"></p>
 <ol>
 <li>跟GCNs相比，GAT模型在Cora和Citeseer数据集上精度分别提高了1.5%和1.6%，这表明对邻接节点分配不同的注意力系数是有益的。</li>
 <li>跟GraphSAGE相比，GAT在PPI数据集上精度提高了20.5%，说明了GAT模型在inductive任务上的潜力，以及对不同邻接节点分配不同注意力系数的有效性。</li>
 </ol>
 <p>GAT模型在Cora数据集上的分类结果可视化如下：</p>
-<p>​        <img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/22/Graph%20Attention%20Networks/Snipaste_2020-07-24_17-08-14.png?raw=true" alt="Snipaste_2020-07-24_17-08-14"></p>
+<p>​    </p>
 <h1 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h1><p>本文提出了图注意力网络(GATs)，这是一种新型的利用masked自注意力层的卷积式神经网络，它能够处理图结构的数据，具有计算简洁、允许不同权重的邻接结点、不依赖于整个图结构等优势，可以处理谱方法的一诸多缺陷，在各数据集上获得了最佳的性能。</p>
 <h1 id="Future-Works"><a href="#Future-Works" class="headerlink" title="Future Works"></a>Future Works</h1><p>有几个潜在的可改进和扩展GATs的未来工作，如克服前述只能处理一个批次数据的实际问题，使得模型能够处理更大的批次数据。另外一个特别有趣的研究方向是利用注意力机制对模型的可解释性进行深入分析。最后，扩展模型以包含边的特征(可能表示节点之间的关系)将允许我们处理更多种问题。</p>
 <h1 id="Understanding"><a href="#Understanding" class="headerlink" title="Understanding"></a>Understanding</h1><ol>
