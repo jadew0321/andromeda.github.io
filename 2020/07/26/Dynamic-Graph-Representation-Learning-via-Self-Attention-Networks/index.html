@@ -96,7 +96,10 @@
 <li>动态图表示学习的目的是学习到每个结点$v\in\mathcal{V}$在时间步$t=1,2,…,T$上的特征表示 $e^t_v\in \mathbb{R}^d$。</li>
 <li>动态节点特征表示$e^t_v$中不仅保留了邻接节点对中心节点$v$的聚合作用，也保留了时刻$t$之前的图结构演变行为。</li>
 </ul>
-<h1 id="Dynamic-Self-Attention-Network"><a href="#Dynamic-Self-Attention-Network" class="headerlink" title="Dynamic Self-Attention Network"></a>Dynamic Self-Attention Network</h1><h1 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h1>
+<h1 id="Dynamic-Self-Attention-Network"><a href="#Dynamic-Self-Attention-Network" class="headerlink" title="Dynamic Self-Attention Network"></a>Dynamic Self-Attention Network</h1><p>在本节中，首先描述模型的高层结构。DySAT主要由结构层和时序自注意层构成，它们可用于通过层的叠加构建任意的图神经网络架构，采用multi-head注意机制来提高模型容量和稳定性。</p>
+<p>结构模块通过自注意聚合从局部邻域提取节点特征，计算更新每个时刻图结构的中间节点特征。这些特征作为时序模块的输入，时序块处理多个时间步骤以捕获图结构的时序变化。</p>
+<p>模型结构图如下所示：</p>
+<h1 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h1>
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
                 <source type="audio/mpeg" src="">
