@@ -159,9 +159,14 @@
 <p>用位置嵌入向量给所有时刻的图结构进行排序，$\left\{\boldsymbol{p}^{1}, \ldots, \boldsymbol{p}^{T}\right\}, \boldsymbol{p}^{t} \in \mathbb{R}^{f}$，然后将结构注意力模块的输出和位置嵌入向量进行相加：$\left\{\boldsymbol{h}_{v}^{1}+\boldsymbol{p}^{1}, \boldsymbol{h}_{v}^{2}+\boldsymbol{p}^{2}, \ldots, \boldsymbol{h}_{v}^{T}+\boldsymbol{p}^{T}\right\}$。同样采用多层堆叠的方式，并且最后一层的输出在每个位置上向前传递到前馈层，以给出最终的节点表示$\left\{\boldsymbol{e}_{v}^{1}, \boldsymbol{e}_{v}^{2}, \ldots, \boldsymbol{e}_{v}^{T},\forall v \in \mathcal{V}\right\}$。</p>
 </li>
 <li><p>Graph context prediction：</p>
+<p><img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/26/Dynamic-Graph-Representation-Learning-via-Self-Attention-Networks/Snipaste_2020-07-27_13-47-48.png?raw=true" alt="Snipaste_2020-07-27_13-47-48"></p>
 </li>
 </ul>
-<h1 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h1>
+<h1 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h1><p><img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/26/Dynamic-Graph-Representation-Learning-via-Self-Attention-Networks/Snipaste_2020-07-27_13-48-33.png?raw=true" alt="Snipaste_2020-07-27_13-48-33"></p>
+<p><img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/26/Dynamic-Graph-Representation-Learning-via-Self-Attention-Networks/Snipaste_2020-07-27_13-48-55.png?raw=true" alt="Snipaste_2020-07-27_13-48-55"></p>
+<p><img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/26/Dynamic-Graph-Representation-Learning-via-Self-Attention-Networks/Snipaste_2020-07-27_13-57-37.png?raw=true" alt="Snipaste_2020-07-27_13-57-37"></p>
+<h1 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h1><p>在本文中，我们介绍了一种新的自注意神经网络结构——DySAT。具体来说，DySAT使用(1)结构邻域和(2)历史节点表示上的自注意来计算动态节点表示，从而有效地捕捉图结构的时间进化模式。在各种真实世界动态图数据集上的实验结果表明，DySAT实现了显著的性能提高。虽然我们的实验是在没有节点特征的图上进行的，但是DySAT可以很容易地推广到特征丰富的图上。另一个有趣的方向是考虑该框架的连续时间推广，以合并更多的细粒度时间变化。</p>
+
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
                 <source type="audio/mpeg" src="">
