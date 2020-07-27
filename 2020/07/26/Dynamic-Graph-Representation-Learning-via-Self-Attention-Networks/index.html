@@ -99,6 +99,68 @@
 <h1 id="Dynamic-Self-Attention-Network"><a href="#Dynamic-Self-Attention-Network" class="headerlink" title="Dynamic Self-Attention Network"></a>Dynamic Self-Attention Network</h1><p>在本节中，首先描述模型的高层结构。DySAT主要由结构层和时序自注意层构成，它们可用于通过层的叠加构建任意的图神经网络架构，采用multi-head注意机制来提高模型容量和稳定性。</p>
 <p>结构模块通过自注意聚合从局部邻域提取节点特征，计算更新每个时刻图结构的中间节点特征。这些特征作为时序模块的输入，时序块处理多个时间步骤以捕获图结构的时序变化。</p>
 <p>模型结构图如下所示：</p>
+<p><img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/26/Dynamic-Graph-Representation-Learning-via-Self-Attention-Networks/Snipaste_2020-07-26_12-39-07.png?raw=true" alt="Snipaste_2020-07-26_12-39-07"></p>
+<h3 id="Structual-Self-Attention"><a href="#Structual-Self-Attention" class="headerlink" title="Structual Self-Attention"></a>Structual Self-Attention</h3><ul>
+<li><p>输入</p>
+<p>某时刻的图结构 $\mathcal{G}\in \mathbb{G}$</p>
+<p>输入节点的特征表示$\left\{\boldsymbol{x}_v\in\mathbb{R}^D, \forall v\in\mathcal{V} \right\}$，其中$D$是输入特征嵌入维度。</p>
+<p>初始层的输入可以是每个节点的one-hot编码，也可以是特征。</p>
+</li>
+<li><p>输出</p>
+<p>根据图结构捕获局部特性的节点新特征$\left\{\boldsymbol{z}_v\in\mathbb{R}^F, \forall v\in\mathcal{V} \right\}$，其中$F$是特征维度。</p>
+</li>
+<li><p>注意力机制</p>
+<p>该层使用的注意力机制是GAT的一个变体</p>
+<script type="math/tex; mode=display">
+\quad \alpha_{u v}=\frac{\exp \left(\sigma\left(A_{u v} \cdot \boldsymbol{a}^{T}\left[\boldsymbol{W}^{s} \boldsymbol{x}_{u} \| \boldsymbol{W}^{s} \boldsymbol{x}_{v}\right]\right)\right)}{\sum_{w \in \mathcal{N}_{v}} \exp \left(\sigma\left(A_{w v} \cdot \boldsymbol{a}^{T}\left[\boldsymbol{W}^{s} \boldsymbol{x}_{w}|| \boldsymbol{W}^{s} \boldsymbol{x}_{v}\right]\right)\right)}</script><p>其中，$\mathcal{N}_v=\left\{u\in\mathcal{V}:(u,v)\in \mathcal{E}\right\}$表示中心节点的邻接节点，$\boldsymbol{W}^s\in\mathbb{R}^{D\times F}$是一个可学习的共享线性变换系数矩阵，$\boldsymbol{a}\in\mathbb{R}^{2D}$是一个可学习的权重向量，用来参数化注意力函数，||表示拼接操作，$\sigma(\cdot)$是一个非线性激活函数。与GAT不同的是，这里采用$A_{uv}$来表示边$(u,v)$的权重。</p>
+<p>节点特征可更新如下：</p>
+<script type="math/tex; mode=display">
+\boldsymbol{z}_{v}=\sigma\left(\sum_{u \in \mathcal{N}_{v}} \alpha_{u v} \boldsymbol{W}^{s} \boldsymbol{x}_{u}\right)</script><p>在实际模型实现中，同样采用LeakyRELU非线性和ELU计算输出。实验部分采用了稀疏矩阵来实现masked self-attention。</p>
+</li>
+</ul>
+<h3 id="Temporal-Self-Attention"><a href="#Temporal-Self-Attention" class="headerlink" title="Temporal Self-Attention"></a>Temporal Self-Attention</h3><p>本层的关键目标是捕获图结构在多个时间步长的时间变化。</p>
+<ul>
+<li><p>输入</p>
+<p>特定节点$v$在不同时刻的特征序列，$\left\{\boldsymbol{x}^1_v,\boldsymbol{x}^2_v,…,\boldsymbol{x}^T_v\right\}, \boldsymbol{x}^t_v\in \mathbb{R}^{D’}$。特征序列$\boldsymbol{x}^t_v$表示了$t$时刻中心节点$v$的局部结构，$T$是总的时间步数，$D’$是输入特征的维度，把输入特征沿着时间轴拼接得到$\boldsymbol{X}_v\in\mathbb{R}^{T\times D’}$。</p>
+</li>
+<li><p>输出</p>
+<p>节点$v$在每个时刻的新的特征表示，$\left\{\boldsymbol{z}^1_v,\boldsymbol{z}^2_v,…,\boldsymbol{z}^T_v\right\}, \boldsymbol{z}^t_v\in \mathbb{R}^{F’}$。把输出特征沿着时间轴拼接得到$\boldsymbol{Z}_v\in\mathbb{R}^{T\times F’}$。</p>
+</li>
+<li><p>注意力机制</p>
+<script type="math/tex; mode=display">
+\quad e_{v}^{i j}=\left(\frac{\left(\left(\boldsymbol{X}_{v} \boldsymbol{W}_{q}\right)\left(\boldsymbol{X}_{v} \boldsymbol{W}_{k}\right)^{T}\right)_{i j}}{\sqrt{F^{\prime}}}+M_{i j}\right)</script><script type="math/tex; mode=display">
+\quad \beta_{v}^{i j}=\frac{\exp \left(e_{v}^{i j}\right)}{\sum_{k=1}^{T} \exp \left(e_{v}^{i k}\right)}</script></li>
+</ul>
+<script type="math/tex; mode=display">
+  \boldsymbol{Z}_{v}=\boldsymbol{\beta}_{\boldsymbol{v}}\left(\boldsymbol{X}_{v} \boldsymbol{W}_{v}\right)</script><p>  其中，$\beta_v\in\mathbb{R}^{T\times T}$是注意力系数矩阵，$\boldsymbol{M}\in \mathbb{R}^{T\times T}$，$M_{i j} \in\{-\infty, 0\}$是掩码矩阵，并且</p>
+<script type="math/tex; mode=display">
+  M_{i j}=\left\{\begin{array}{ll}
+  0, & i \leq j \\
+  -\infty, & \text { otherwise }
+  \end{array}\right.</script><p>  也就说只有之前时刻对当前时刻有影响，当$M_{ij}=-\infty$时，通过softmax函数得到的注意力系数$\beta^{ij}_v$是0。</p>
+<h3 id="Multi-Head-Attention"><a href="#Multi-Head-Attention" class="headerlink" title="Multi-Head Attention"></a>Multi-Head Attention</h3><ul>
+<li><p>Structural multi-head self-attention</p>
+<script type="math/tex; mode=display">
+\boldsymbol{h}_{v}=\operatorname{Concat}\left(\boldsymbol{z}_{v}^{1}, \boldsymbol{z}_{v}^{2}, \ldots, \boldsymbol{z}_{v}^{H}\right) \quad \forall v \in V</script></li>
+<li><p>Temporal multi-head self-attention</p>
+<script type="math/tex; mode=display">
+\boldsymbol{H}_{v}=\operatorname{Concat}\left(\boldsymbol{Z}_{v}^{1}, \boldsymbol{Z}_{v}^{2}, \ldots, \boldsymbol{Z}_{v}^{H}\right) \quad \forall v \in V</script></li>
+</ul>
+<h3 id="DYSAT-Architecture"><a href="#DYSAT-Architecture" class="headerlink" title="DYSAT Architecture"></a>DYSAT Architecture</h3><p>整个DYSAT框架从上到下分为三个模块:(1)结构注意力模块，(2)时间注意力模块，(3)图形上下文预测。</p>
+<ul>
+<li><p>输入：时刻1到时刻$T$的图结构的数据</p>
+</li>
+<li><p>输出：时刻1到时刻$T$的图节点的特征表示</p>
+</li>
+<li><p>Structural attention block：</p>
+<p>该模块由多个堆叠的结构自注意层组成，用于提取不同距离节点的特征。我们将每一层独立应用于具有共享参数的不同时刻的图结构，以捕获节点周围的局部邻域结构。该模块的输出节点特征为$\left\{\boldsymbol{h}_{v}^{1}, \boldsymbol{h}_{v}^{2}, \ldots, \boldsymbol{h}_{v}^{T}\right\}, \boldsymbol{h}_{v}^{t} \in \mathbb{R}^{f}$。</p>
+</li>
+<li><p>Temporal attention block：</p>
+<p>用位置嵌入向量给所有时刻的图结构进行排序，$\left\{\boldsymbol{p}^{1}, \ldots, \boldsymbol{p}^{T}\right\}, \boldsymbol{p}^{t} \in \mathbb{R}^{f}$，然后将结构注意力模块的输出和位置嵌入向量进行相加：$\left\{\boldsymbol{h}_{v}^{1}+\boldsymbol{p}^{1}, \boldsymbol{h}_{v}^{2}+\boldsymbol{p}^{2}, \ldots, \boldsymbol{h}_{v}^{T}+\boldsymbol{p}^{T}\right\}$。同样采用多层堆叠的方式，并且最后一层的输出在每个位置上向前传递到前馈层，以给出最终的节点表示$\left\{\boldsymbol{e}_{v}^{1}, \boldsymbol{e}_{v}^{2}, \ldots, \boldsymbol{e}_{v}^{T},\forall v \in \mathcal{V}\right\}$。</p>
+</li>
+<li><p>Graph context prediction：</p>
+</li>
+</ul>
 <h1 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h1>
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
