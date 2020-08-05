@@ -608,7 +608,7 @@ a_{t+j}^{t-i}=\operatorname{softmax}\left(u_{t+j}^{t-i}\right)=\frac{\exp \left(
 <li><p>self-attention 机制</p>
 <p>同样是在每个节点间共享self-attention 机制：$\mathbb{R}^{F^{\prime}} \times \mathbb{R}^{F^{\prime}} \rightarrow \mathbb{R}$，可计算节点 $i$ 和 $j$ 之间的attention 系数如下：</p>
 <script type="math/tex; mode=display">
-e_{i j}=a\left(\mathbf{W} \vec{h}_{i}, \mathbf{W} \vec{h}_{j}\right)</script><p>该系数表示了节点 $i$ 的特征对节点 $j$ 的重要性。注意机制 $a$ 是一个单层前馈神经网络，用一个权重向量来表示：$\overrightarrow{\mathbf{a}} \in \mathbb{R}^{2 F^{\prime}}$，它把拼接后的长度为2F的高维特征映射到一个实属上，作为注意力系数。</p>
+e_{i j}=a\left(\mathbf{W} \vec{h}_{i}, \mathbf{W} \vec{h}_{j}\right)</script><p>该系数表示了节点 $i$ 的特征对节点 $j$ 的重要性。注意机制 $a$ 是一个单层前馈神经网络，用一个权重向量来表示：$\overrightarrow{\mathbf{a}} \in \mathbb{R}^{2 F^{\prime}}$，它把拼接后的长度为2F的高维特征映射到一个实数上，作为注意力系数。</p>
 <p>attention 机制分为以下两种：</p>
 <ol>
 <li>Global graph attention：允许每个节点参与其他任意节点的注意力机制，它忽略了所有的图结构信息。</li>
@@ -624,8 +624,7 @@ e_{i j}=a\left(\mathbf{W} \vec{h}_{i}, \mathbf{W} \vec{h}_{j}\right)</script><p>
 <li><p>节点特征更新</p>
 <p>在得到归一化的注意力系数之后，可以通过对邻接节点特征的线性组合经过一个非线性激活函数来更新节点自身的特征作为输出：</p>
 <script type="math/tex; mode=display">
-  \vec{h}_{i}^{\prime}=\sigma\left(\sum_{j \in \mathcal{N}_{i}} \alpha_{i j} \mathbf{W} \vec{h}_{j}\right)</script><script type="math/tex; mode=display">
-\vec{h}_{i}^{\prime}=\prod_{k=1}^{K} \sigma\left(\sum_{j \in \mathcal{N}_{i}} \alpha_{i j}^{k} \mathbf{W}^{k} \vec{h}_{j}\right)</script></li>
+\vec{h}_{i}^{\prime}=\sigma\left(\sum_{j \in \mathcal{N}_{i}} \alpha_{i j} \mathbf{W} \vec{h}_{j}\right)</script></li>
 </ul>
 <p><img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/22/Graph-Attention-Networks/Snipaste_2020-07-24_11-05-51.png?raw=true" alt="Snipaste_2020-07-24_11-05-51" style="zoom:67%; float: center"></p>
 <h3 id="Multi-head-attention"><a href="#Multi-head-attention" class="headerlink" title="Multi-head attention"></a>Multi-head attention</h3><p>为了稳定self-attention的学习过程，本文使用多头注意力机制。具体地，使$K$ 个独立注意力机制根据上式进行变换，得到更新的节点输出特征，然后将$K$ 个特征拼接（concat），得到如下输出特征：</p>
@@ -687,11 +686,11 @@ e_{i j}=a\left(\mathbf{W} \vec{h}_{i}, \mathbf{W} \vec{h}_{j}\right)</script><p>
 </ol>
 <p>GAT模型在Cora数据集上的分类结果可视化如下：</p>
 <p>​    <img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/22/Graph-Attention-Networks/Snipaste_2020-07-24_17-08-14.png?raw=true" alt="Snipaste_2020-07-24_17-08-14"></p>
-<h1 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h1><p>本文提出了图注意力网络(GATs)，这是一种新型的利用masked自注意力层的卷积式神经网络，它能够处理图结构的数据，具有计算简洁、允许不同权重的邻接结点、不依赖于整个图结构等优势，可以处理谱方法的一诸多缺陷，在各数据集上获得了最佳的性能。</p>
+<h1 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h1><p>本文提出了图注意力网络(GATs)，这是一种新型的利用masked self-attention 的卷积式神经网络，它能够处理图结构的数据，具有计算简洁、允许不同权重的邻接结点、不依赖于整个图结构等优势，可以处理谱方法的诸多缺陷，在各数据集上获得了最佳的性能。</p>
 <h1 id="Future-Works"><a href="#Future-Works" class="headerlink" title="Future Works"></a>Future Works</h1><p>有几个潜在的可改进和扩展GATs的未来工作，如克服前述只能处理一个批次数据的实际问题，使得模型能够处理更大的批次数据。另外一个特别有趣的研究方向是利用注意力机制对模型的可解释性进行深入分析。最后，扩展模型以包含边的特征(可能表示节点之间的关系)将允许我们处理更多种问题。</p>
 <h1 id="Understanding"><a href="#Understanding" class="headerlink" title="Understanding"></a>Understanding</h1><ol>
 <li>GAT与GCN本质思想都是将邻接节点的特征聚合到中心节点上（aggregate 运算），利用图上的local stationary 学习新的节点特征，但是两者的实现思路和方法是不同的，GCN是利用图的具体结构，构造拉普拉斯矩阵进行local convolution，而GAT是利用节点之间的相关性，构造attention系数，并且该系数只与节点的特征有关，和图的结构无关。因此GAT的学习能力会更强。</li>
-<li>GAT采用逐点运算，对于有向图来说，可以根据需要选择计算节点之间的attention系数，拜托了GCN中的拉普拉斯矩阵的束缚。并且，注意力系数也仅与节点特征相关，与图结构无关，因此改变图的结构对GAT的影响不大，只需要改变邻接节点个数，重新计算即可，这也是能胜任inductive学习的原因所在。</li>
+<li>GAT采用逐点运算，对于有向图来说，可以根据需要选择计算节点之间的attention系数，摆脱了GCN中的拉普拉斯矩阵的束缚。并且，注意力系数也仅与节点特征相关，与图结构无关，因此改变图的结构对GAT的影响不大，只需要改变邻接节点个数，重新计算即可，这也是能胜任inductive学习的原因所在。</li>
 </ol>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><blockquote>
 <ol>
