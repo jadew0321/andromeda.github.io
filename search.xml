@@ -244,9 +244,9 @@
       </tags>
   </entry>
   <entry>
-    <title>Multistep Speed Prediction on Traffic Networks-A Graph Convolutional Sequence-to-Sequence Learning Approach with Attention Mechanism</title>
+    <title>Multistep Speed Prediction on Traffic Networks</title>
     <url>/andromeda.github.io/2020/07/25/Multistep-Speed-Prediction-on-Traffic-Networks/</url>
-    <content><![CDATA[<h1 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h1><p>本文为了捕获多步交通状况预测中复杂的非平稳时间动态和空间依赖性，提出了一种新的深度学习框架——attention graph convolutional sequence-to-sequence model (AGC-Seq2Seq)。在AGC-Seq2Seq中，空间和时间的依赖关系分别通过Seq2Seq模型和图卷积网络进行建模。提出了基于Seq2Seq架构的注意力机制以及新的训练方法，从而克服交通流多步预测的困难，进而能捕捉到交通模式的时间异质性（temporal heterogeneity）。</p>
+    <content><![CDATA[<h1 id="Multistep-Speed-Prediction-on-Traffic-Networks-A-Graph-Convolutional-Sequence-to-Sequence-Learning-Approach-with-Attention-Mechanism"><a href="#Multistep-Speed-Prediction-on-Traffic-Networks-A-Graph-Convolutional-Sequence-to-Sequence-Learning-Approach-with-Attention-Mechanism" class="headerlink" title="Multistep Speed Prediction on Traffic Networks-A Graph Convolutional Sequence-to-Sequence Learning Approach with Attention Mechanism"></a>Multistep Speed Prediction on Traffic Networks-A Graph Convolutional Sequence-to-Sequence Learning Approach with Attention Mechanism</h1><h1 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h1><p>本文为了捕获多步交通状况预测中复杂的非平稳时间动态和空间依赖性，提出了一种新的深度学习框架——attention graph convolutional sequence-to-sequence model (AGC-Seq2Seq)。在AGC-Seq2Seq中，空间和时间的依赖关系分别通过Seq2Seq模型和图卷积网络进行建模。提出了基于Seq2Seq架构的注意力机制以及新的训练方法，从而克服交通流多步预测的困难，进而能捕捉到交通模式的时间异质性（temporal heterogeneity）。</p>
 <h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><h3 id="Backgroud"><a href="#Backgroud" class="headerlink" title="Backgroud"></a>Backgroud</h3><p>技术和经济的稳定发展，使得汽车的使用在过去的几十年里有了显著的增长。然而，汽车使用的增加导致了交通拥堵、交通事故、能源过度消耗、碳排放等一系列社会问题。智能交通系统(The intelligent transportation system，ITS)被认为是一个改善交通管理和服务的有效解决方案。高精度的基于交通预测的应用不仅有利于出行者的路线规划和出发时间安排，而且能为交通控制提供有价值的信息，从而提高交通效率和安全。未来的一些研究重点有：</p>
 <ol>
 <li>对交通网络的流量预测应该得到更多的重视；</li>
