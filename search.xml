@@ -724,7 +724,7 @@ e_{i j}=a\left(\mathbf{W} \vec{h}_{i}, \mathbf{W} \vec{h}_{j}\right)</script><p>
 <p>Typical objectives are to identify poorly performing loops and to diagnose causes for this unacceptable performance. </p>
 </blockquote>
 <h1 id="一、控制系统的经济监察"><a href="#一、控制系统的经济监察" class="headerlink" title="一、控制系统的经济监察"></a>一、控制系统的经济监察</h1><p>Economic Auditing of Control Systems</p>
-<h3 id="过程控制基准度量标准的正式框架"><a href="#过程控制基准度量标准的正式框架" class="headerlink" title="过程控制基准度量标准的正式框架"></a>过程控制基准度量标准的正式框架</h3><p>Formal Framework for Process Control Benchmarking Metrics</p>
+<h3 id="1、过程控制基准度量标准的正式框架"><a href="#1、过程控制基准度量标准的正式框架" class="headerlink" title="1、过程控制基准度量标准的正式框架"></a>1、过程控制基准度量标准的正式框架</h3><p>Formal Framework for Process Control Benchmarking Metrics</p>
 <p>在复杂的控制系统中，例如在生物体或大型国际组织中，目标通常是分层部署的，较高层次的目标控制次要层次目标的设定。这种分层控制可以用0级以上的过程控制方案表示，如下图所示。</p>
 <p><img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/11/Notes-for-Process-Control-Performance-Assessment/Snipaste_2020-07-14_10-49-51.png?raw=true" alt="**Snipaste_2020-07-14_10-49-51**"></p>
 <p>层次结构中较低层次的目标是为实现较高层次目标而采取的行动的结果。一般来说，在存在随机干扰的情况下，控制回路会降低回路输出的可变性，但不能消除所有的变化。在原回路之上增加一个控制回路可以消除误差的变化。因此，控制层次结构中所需的级别数量将取决于单个控制循环的监管能力。</p>
@@ -742,12 +742,12 @@ e_{i j}=a\left(\mathbf{W} \vec{h}_{i}, \mathbf{W} \vec{h}_{j}\right)</script><p>
 <li>性能度量应该在物理上和技术上对被评估的过程有意义：因此，度量可以捕获并度量所需物理属性的存在，或者度量过程的经济维度。</li>
 <li>性能指标最好能够经过优化分析，以计算出完全可实现的优化性能：进一步说，在存在结构化设计和实现约束的情况下，应该计算可实现的优化性能。</li>
 </ul>
-<h4 id="基准的目标"><a href="#基准的目标" class="headerlink" title="基准的目标"></a>基准的目标</h4><ul>
+<h4 id="1-1-基准的目标"><a href="#1-1-基准的目标" class="headerlink" title="1.1 基准的目标"></a>1.1 基准的目标</h4><ul>
 <li>公司：从产品的生产和销售中持续产生健康和不断增长的利润。</li>
 <li>工程：为实现公司目标，创造持续改进的技术环境，以有效生产所需产品。</li>
 <li>控制系统：通过确保安全和最佳的方法来提高/保持一致的生产率和产品质量，同时降低运营成本，工厂停机时间和维护成本，实现公司和工程的目标。</li>
 </ul>
-<h4 id="基准的原则"><a href="#基准的原则" class="headerlink" title="基准的原则"></a>基准的原则</h4><ul>
+<h4 id="1-2-基准的原则"><a href="#1-2-基准的原则" class="headerlink" title="1.2 基准的原则"></a>1.2 基准的原则</h4><ul>
 <li>在多变量流程中，流程循环之间存在交互作用，独立地优化每个循环并不能确保整个流程是最佳的。(“局部最优系统不一定转化为全局最优系统”)。</li>
 <li>对流程中各个循环的性能进行基准测试，可以度量单个循环与局部最优值之间的距离，不足与说明流程的总体性能以及流程与全局最优值之间的距离。</li>
 <li><p>流程的全局性能将主要由受约束回路的性能决定，这些回路受到一些物理、环境或用户强加的限制。</p>
