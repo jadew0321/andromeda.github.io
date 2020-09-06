@@ -952,6 +952,7 @@ G(s)=\frac{e^{-2s}}{2s+1}</script><p>该过程受随机干扰的影响，通过�
 </li>
 </ul>
 <p>当对抗训练完成之后，我们把真实数据映射到潜空间中，作为异常检测的依据。</p>
+<p><img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/09/03/TAnoGAN/%7B4D7927B1-7DF8-48D9-97C5-C8EF096ED74A%7D.png.jpg?raw=true" alt="{4D7927B1-7DF8-48D9-97C5-C8EF096ED74A}.png"></p>
 </li>
 </ol>
 </li>
@@ -971,6 +972,7 @@ G(s)=\frac{e^{-2s}}{2s+1}</script><p>该过程受随机干扰的影响，通过�
 \mathcal{L}_{D}\left(\mathbf{z}_{\lambda}\right)=\sum\left|f(\mathbf{x})-f\left(G\left(\mathbf{z}_{\lambda}\right)\right)\right|</script><p>总的损失函数为这两部分的加权组合：</p>
 <script type="math/tex; mode=display">
 \mathcal{L}\left(\mathbf{z}_{\lambda}\right)=(1-\gamma) \cdot \mathcal{L}_{R}\left(\mathbf{z}_{\lambda}\right)+\gamma \cdot \mathcal{L}_{D}\left(\mathbf{z}_{\lambda}\right)</script><p>前者强制fake小序列和真实小序列之间最相似，后者使得fake小序列在流形$\mathbf{X}$中。</p>
+<p><img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/09/03/TAnoGAN/%7B276E6541-E29C-4C0F-96A5-533AC7029681%7D.png.jpg?raw=true" alt="{276E6541-E29C-4C0F-96A5-533AC7029681}.png"></p>
 </li>
 </ul>
 </li>
