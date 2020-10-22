@@ -79,7 +79,7 @@ Typical objectives are to identify poorly performing loops and to d,">
 <ul>
 <li><p>产品性能度量: 这些是过程产品或输出的质量变量。</p>
 </li>
-<li><p>过程性能度量: 当生产产品或输出时，指示过程是否按预期方式运行的那些变量。</p>
+<li><p>过程性能度量: 当生产产品或输出时，通过对变量分析指示过程是否按预期方式运行。</p>
 </li>
 </ul>
 <p>性能指标的关键特征应该是:</p>
@@ -107,7 +107,7 @@ Typical objectives are to identify poorly performing loops and to d,">
 <p><img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/11/Notes-for-Process-Control-Performance-Assessment/Snipaste_2020-08-06_09-18-27.png?raw=true" alt="**Snipaste_2020-08-06_09-18-27**"></p>
 <h4 id="2-1-发展历程"><a href="#2-1-发展历程" class="headerlink" title="2.1 发展历程"></a>2.1 发展历程</h4><ol>
 <li>最小方差准则（MVC）是一种由线性随机控制理论的应用简单实用的控制策略，最早是由[Åström，1967]提出的。 Åström使用MVC技术将输出信号的方差最小化，以控制造纸机中的纸张厚度。控制目标是在存在随机干扰的情况下，使纸张厚度的变化降至最低。从那时起，MVC技术吸引了许多实际应用[例如 Flunkert and Unbehauen，1993； Kaminskas et al。，1992]，获得了重要的理论发展，最终产生了模型预测控制技术</li>
-<li>Harris and Desborough [1992]引入了归一化性能指标，用于对照最小方差控制基准评估控制器性能，该指标可以使用最小二乘法估算。基于Harris和Desborough方法的控制器性能指数（CPI）的实现包括对闭环的过程数据拟合自回归（AR）时间序列模型。</li>
+<li>Harris 和 Desborough [1992]引入了归一化性能指标，用于对照最小方差控制基准评估控制器性能，该指标可以使用最小二乘法估算。基于Harris和Desborough方法的控制器性能指数（CPI）的实现包括对闭环的过程数据拟合自回归（AR）时间序列模型。</li>
 </ol>
 <h4 id="2-2-最小方差控制"><a href="#2-2-最小方差控制" class="headerlink" title="2.2 最小方差控制"></a>2.2 最小方差控制</h4><p>通用的随机反馈控制系统结构如下图所示：</p>
 <p><img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/07/11/Notes-for-Process-Control-Performance-Assessment/Snipaste_2020-08-10_14-57-26.png?raw=true" alt="Snipaste_2020-08-10_14-57-26"></p>
@@ -235,7 +235,19 @@ G(s)=\frac{e^{-2s}}{2s+1}</script><p>该过程受随机干扰的影响，通过�
 <p>CPI指数为0.81表明控制性能非常好。这时通过重新调整控制器仍有可能实现一个小的改进，但是很难说我们是否已经实现了当前控制器所能实现的最好的改进。这是因为像PID这样的简单控制器通常无法实现最小方差控制，特别是在存在死区和当被控对象的阶数高于这个简单例子时。除此之外，实现最小方差控制可能会导致过度的控制作用和控制回路的鲁棒性较差。由于这些原因，提出了一些替代的基准来评估控制回路的性能。</p>
 <h4 id="2-6-非零设定值情形"><a href="#2-6-非零设定值情形" class="headerlink" title="2.6 非零设定值情形"></a>2.6 非零设定值情形</h4><p>在目前的讨论中，我们假设基准数据来自于调节回路，其中控制目标是保持被控制变量在一个恒定的设定值，并拒绝任何干扰。因此在线性系统模型中，设定值被假定为0，所以仅仅只考虑偏离这个额定工作点的情况。</p>
 <p>然而，在闭环数据收集过程中，设定值可能会偶尔发生变化。在这种情况下，控制误差可以用来代替输出。如果数据集包含大量这样的设定值变化的情况，那么它们将被有效地视为额外的干扰，CPI指标将反映一个综合的调节性能和跟踪性能。一般来说，重要的是要确保用于计算性能基准的数据包含作用在系统上的典型干扰的充分表示。</p>
-<h3 id="3、广义最小方差控制基准"><a href="#3、广义最小方差控制基准" class="headerlink" title="3、广义最小方差控制基准"></a>3、广义最小方差控制基准</h3>
+<h3 id="3、广义最小方差控制基准"><a href="#3、广义最小方差控制基准" class="headerlink" title="3、广义最小方差控制基准"></a>3、广义最小方差控制基准</h3><p>最小方差准则作为一个基准是有价值的，因为它给出了任何线性控制器可以达到的性能的绝对极限。因此，如果一个控制回路的MV分数很高，而闭环输出信号的变化仍然不可接受，那么仅通过重新调整控制器就不能提高性能——这时就需要改变控制器结构（例如引入前馈动作）。</p>
+<p>然而，在实现最小方差控制器时存在一些实际问题：</p>
+<ol>
+<li>宽带宽</li>
+<li>噪声放大</li>
+<li>非常激进的控制行为，导致饱和、执行器的过度磨损。</li>
+<li>不能处理非最小相位系统。</li>
+</ol>
+<h4 id="3-1-广义最小方差控制"><a href="#3-1-广义最小方差控制" class="headerlink" title="3.1 广义最小方差控制"></a>3.1 广义最小方差控制</h4><p>广义最小方差控制是由Clarke和Gawthrop为自整定控制应用发展起来的，他们在性能指标中引入控制信号和动态加权函数。</p>
+<p>GMV控制器使附加输出$(t)$的方差最小，如下图所示：</p>
+<p>因此，以下性能指标根据过程动态而被最小化：</p>
+<p>其中，</p>
+
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
                 <source type="audio/mpeg" src="">
