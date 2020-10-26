@@ -1059,11 +1059,11 @@ D=D_0q^d+D_1q^{d-1}+…+D_{d-1}q</script><p>其中，$d$是交互矩阵的阶数
 <p>与单变量控制性能评估不同，对于多变量控制性能评估，除了交互矩阵具有简单或对角结构的情形，其他情形下只知道两两时滞对于计算最小方差是不够的。</p>
 <p>然而，如果每一对输入和输出的时延确实是已知的，我们应该寻找一个可能的简单或对角结构的交互矩阵，它可以直接导致计算多变量最小方差。简单的交互矩阵和对角交互矩阵都可以从过程的每对输入和输出之间的时间延迟中计算出来。人们可能会惊讶地发现，简单和对角交互矩阵并不少见，特别是在工业过程中，传递函数矩阵的稀疏结构经常被观察到。稀疏结构也有助于确定相互作用者的结构。</p>
 <p>考虑一个$n \times m$的多变量传递函数矩阵：</p>
-<p>图Snipaste_2020-10-22_14-27-55</p>
+<p><img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/10/22/Alternative-solutions-to-multi-variate-control-performance/Snipaste_2020-10-22_14-27-55.png?raw=true" alt="**Snipaste_2020-10-22_14-27-55**"></p>
 <p>其中，$T_{ij}$是标量传递函数，表示从第$j$个输入到第$i$个输出。定义如下的时延矩阵：</p>
-<p>图Snipaste_2020-10-22_14-31-01</p>
+<p><img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/10/22/Alternative-solutions-to-multi-variate-control-performance/Snipaste_2020-10-22_14-31-01.png?raw=true" alt="Snipaste_2020-10-22_14-31-01"></p>
 <p>其中，$d_{ij}$是假设已知的时延，$t_{ij}$是从第$j$个输入到第$i$个输出的第一个非零脉冲响应系数，这是未知的。从上式，我们可以得到一个对角矩阵$\Theta$：</p>
-<p>图Snipaste_2020-10-22_14-33-19</p>
+<p><img src="https://github.com/jadew0321/andromeda.github.io/blob/master/2020/10/22/Alternative-solutions-to-multi-variate-control-performance/Snipaste_2020-10-22_14-33-19.png?raw=true" alt="Snipaste_2020-10-22_14-33-19"></p>
 <p>其中，$d_i=\min\left\{d_ij:j=1,…,m\right\}$</p>
 <ul>
 <li><p>引理二</p>
